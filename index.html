@@ -1,0 +1,1685 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NeuroTutor · Alemán A1</title>
+<style>
+:root{
+  --ink:#1E1C3B; --muted:#5E5C7A; --paper:#F4F3FB; --card:#FFFFFF; --line:#E3E1F2;
+  --violet:#5B47E0; --violet-2:#8A7BF0; --sun:#FFB627; --sun-bg:#FFF5DD; --mint:#0F9D78; --mint-bg:#E3F7F0;
+  --coral:#E0465F; --coral-bg:#FDEBEE; --face:#FBFAFF; --blank:#F0EEFC;
+  --shadow:0 1px 2px rgba(30,28,59,.06), 0 14px 34px -12px rgba(60,40,160,.28);
+  --r-card:26px; --r-ctl:14px;
+  --ui:ui-rounded,"SF Pro Rounded","Segoe UI Variable Display","Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --ink:#ECEAFB; --muted:#A9A6C6; --paper:#14132A; --card:#1E1C3A; --line:#34315A; --face:#262449; --blank:#2C2954;
+  --violet:#8C7CFF; --violet-2:#B3A8FF; --sun-bg:#3A3018; --mint:#3DD3A6; --mint-bg:#16352E; --coral:#FF7A8F; --coral-bg:#3D1E28;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 18px 40px -14px rgba(0,0,0,.6);
+}}
+:root[data-theme="dark"]{
+  --ink:#ECEAFB; --muted:#A9A6C6; --paper:#14132A; --card:#1E1C3A; --line:#34315A; --face:#262449; --blank:#2C2954;
+  --violet:#8C7CFF; --violet-2:#B3A8FF; --sun-bg:#3A3018; --mint:#3DD3A6; --mint-bg:#16352E; --coral:#FF7A8F; --coral-bg:#3D1E28;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100vh;font-family:var(--ui);color:var(--ink);background:var(--paper);font-size:17px;line-height:1.5;-webkit-text-size-adjust:100%;
+  background-image:radial-gradient(60rem 30rem at 110% -10%, color-mix(in srgb,var(--violet) 22%,transparent), transparent 60%),
+                   radial-gradient(40rem 26rem at -20% 110%, color-mix(in srgb,var(--sun) 20%,transparent), transparent 60%);
+  background-attachment:fixed}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  background:color-mix(in srgb,var(--paper) 78%,transparent);border-bottom:1px solid var(--line)}
+.top .in{max-width:720px;margin:0 auto;padding:12px 18px;display:flex;align-items:center;gap:14px}
+.brand{font-weight:800;letter-spacing:-.01em;font-size:18px;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.brand .dot{width:22px;height:22px;border-radius:50%;background:conic-gradient(from 200deg,var(--violet),var(--violet-2),var(--sun),var(--violet));box-shadow:0 0 0 4px color-mix(in srgb,var(--violet) 16%,transparent)}
+.logo{width:34px;height:34px;flex:none;overflow:visible;filter:drop-shadow(0 3px 6px color-mix(in srgb,var(--violet) 35%,transparent))}
+.logo .lobes{transform-origin:32px 32px;animation:breathe 4s ease-in-out infinite}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.035)}}
+.logo .nodes circle{animation:fire 3.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.logo .nodes circle:nth-child(2){animation-delay:.53s}.logo .nodes circle:nth-child(3){animation-delay:1.07s}
+.logo .nodes circle:nth-child(4){animation-delay:1.6s}.logo .nodes circle:nth-child(5){animation-delay:2.13s}.logo .nodes circle:nth-child(6){animation-delay:2.67s}
+@keyframes fire{0%,12%,100%{fill:#fff;transform:scale(1)}5%{fill:var(--sun);transform:scale(1.5)}}
+.logo.cheer{animation:cheer .9s cubic-bezier(.3,1.6,.5,1)}
+@keyframes cheer{0%{transform:scale(1)}35%{transform:scale(1.28) rotate(-6deg)}70%{transform:scale(.95)}100%{transform:none}}
+.logo.big{width:84px;height:84px;margin-bottom:4px}
+@media (prefers-reduced-motion:reduce){.logo .spark{display:none}}
+#progress{flex:1;height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+#bar{height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--violet),var(--violet-2));transition:width .5s cubic-bezier(.2,.8,.2,1)}
+#count{font-variant-numeric:tabular-nums;color:var(--muted);font-size:14px;min-width:64px;text-align:right}
+main{max-width:720px;margin:0 auto;padding:22px 16px 48px}
+.card{background:var(--card);border-radius:var(--r-card);box-shadow:var(--shadow);padding:26px 22px 18px;border:1px solid var(--line);animation:enter .35s cubic-bezier(.2,.8,.2,1)}
+@keyframes enter{from{opacity:0;transform:translateY(10px) scale(.99)}to{opacity:1;transform:none}}
+@media (min-width:640px){.card{padding:34px 36px 22px}}
+.consigna{margin:0 0 18px;font-size:16px;color:var(--muted);font-weight:600}
+.visual{display:flex;justify-content:center;margin:4px 0 22px}
+.visual svg{width:100%;max-width:340px;height:auto;color:var(--ink)}
+.visual svg.small{max-width:230px}
+.scene{border-radius:20px;overflow:hidden}
+.clockwrap{display:flex;align-items:center;justify-content:center;gap:22px;flex-wrap:wrap}
+.clockwrap .clock{width:210px;max-width:62vw}
+.digital{font-size:44px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:.02em;padding:10px 20px;border-radius:18px;background:var(--blank);color:var(--ink);border:2px solid var(--line)}
+.stim{font-size:clamp(21px,5.4vw,27px);font-weight:700;line-height:1.9;letter-spacing:-.005em;margin:0 0 6px}
+.stim.src{background:var(--blank);border-radius:18px;padding:14px 18px;line-height:1.4;margin-bottom:16px}
+.blank,.answer{font:inherit;color:var(--ink);background:var(--blank);border:2px solid transparent;border-bottom:3px solid var(--violet);border-radius:12px;padding:2px 10px;outline:none;transition:border-color .2s,background .2s,box-shadow .2s}
+.blank{width:7ch;max-width:100%;text-align:center;font-weight:700}
+.answer{width:100%;font-size:20px;font-weight:600;padding:14px 16px}
+.blank:focus,.answer:focus{border-color:var(--violet);box-shadow:0 0 0 4px color-mix(in srgb,var(--violet) 20%,transparent);background:var(--card)}
+.blank.ok{border-color:var(--mint);background:var(--mint-bg)}
+.blank.bad{border-color:var(--coral);background:var(--coral-bg)}
+.blank[readonly],.answer[readonly]{opacity:.85}
+.tiles .build{min-height:64px;border:2px dashed var(--line);border-radius:18px;padding:10px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;transition:border-color .2s}
+.tiles .build.has{border-color:var(--violet-2)}
+.tiles .pool{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;min-height:52px}
+.tile{font:inherit;font-size:20px;font-weight:700;color:var(--ink);background:var(--card);border:2px solid var(--line);border-bottom-width:4px;border-radius:14px;padding:8px 16px;cursor:pointer;min-height:48px;transition:transform .15s,border-color .15s}
+.tile:active{transform:translateY(2px)}
+.build .tile{background:var(--blank);border-color:var(--violet-2)}
+.feedback{margin-top:20px}
+.feedback>div{border-radius:18px;padding:14px 16px;animation:enter .3s cubic-bezier(.2,.8,.2,1)}
+.feedback p{margin:4px 0}
+.feedback .tag{font-weight:800;margin:0 0 2px}
+.feedback .de{font-size:20px;font-weight:700}
+.feedback .sub{font-size:14px;color:var(--muted)}
+.hint{display:flex;gap:14px;align-items:flex-start;background:var(--sun-bg);border:1px solid color-mix(in srgb,var(--sun) 55%,transparent)}
+.bulbs{display:flex;gap:5px;padding-top:6px}
+.bulbs i{width:12px;height:12px;border-radius:50%;border:2px solid var(--sun);display:block}
+.bulbs i.on{background:var(--sun);box-shadow:0 0 10px var(--sun)}
+.good{background:var(--mint-bg);border:1px solid color-mix(in srgb,var(--mint) 45%,transparent)}
+.good .tag{color:var(--mint)}
+.solution{background:var(--coral-bg);border:1px solid color-mix(in srgb,var(--coral) 40%,transparent)}
+.solution .tag{color:var(--coral)}
+.note{background:var(--blank);color:var(--muted)}
+s{opacity:.7}
+.actions{display:flex;justify-content:flex-end;margin-top:20px}
+button.primary{font:inherit;font-weight:800;font-size:18px;color:#fff;border:0;border-radius:var(--r-ctl);padding:14px 28px;min-height:52px;cursor:pointer;
+  background:linear-gradient(135deg,var(--violet),color-mix(in srgb,var(--violet) 70%,#C04BD8));box-shadow:0 10px 22px -10px var(--violet);transition:transform .12s,filter .2s}
+button.primary:hover{filter:brightness(1.07)}
+button.primary:active{transform:translateY(1px) scale(.99)}
+button.primary.next{background:linear-gradient(135deg,var(--mint),color-mix(in srgb,var(--mint) 70%,#2C7BE5))}
+button:focus-visible,.tile:focus-visible{outline:3px solid var(--sun);outline-offset:3px}
+@media (max-width:520px){.actions button.primary{width:100%}}
+.kbd{margin:12px 0 0;text-align:right;font-size:13px;color:var(--muted)}
+@media (pointer:coarse){.kbd{display:none}}
+kbd{font:inherit;font-weight:700;border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;padding:0 6px;background:var(--face)}
+.intro h1{font-size:clamp(30px,7vw,40px);line-height:1.1;letter-spacing:-.02em;margin:8px 0 10px}
+.intro .lead{font-size:19px;color:var(--muted);margin:0 0 18px}
+.how{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.how li{background:var(--blank);border-radius:16px;padding:12px 16px}
+.hard{padding-left:20px}.hard li{margin:4px 0;font-weight:600}
+.tip{background:var(--sun-bg);border-radius:14px;padding:12px 14px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0}
+.stats div{background:var(--blank);border-radius:16px;padding:14px;text-align:center}
+.stats strong{display:block;font-size:30px}
+.stats span{font-size:13px;color:var(--muted)}
+.neuron{display:flex;gap:6px;height:16px;align-items:center}
+.neuron span{width:12px;height:12px;border-radius:50%;background:var(--violet);animation:pulse 1.8s infinite}
+.neuron span:nth-child(2){background:var(--violet-2);animation-delay:.2s}.neuron span:nth-child(3){background:var(--sun);animation-delay:.4s}
+@keyframes pulse{0%,100%{transform:scale(.7);opacity:.6}50%{transform:scale(1);opacity:1}}
+
+main{min-height:calc(100vh - 64px);min-height:calc(100dvh - 64px)}
+.hero{display:flex;flex-direction:column;align-items:center;text-align:center;max-width:720px;margin:2vh auto 0;padding:30px 20px 24px;border-radius:32px;
+  background:linear-gradient(160deg,color-mix(in srgb,var(--card) 92%,var(--violet)) 0%,var(--card) 45%,color-mix(in srgb,var(--card) 90%,var(--sun)) 100%);
+  border:1px solid var(--line);box-shadow:var(--shadow);animation:enter .45s cubic-bezier(.2,.8,.2,1)}
+@media (min-width:640px){.hero{padding:34px 44px 26px;margin-top:3vh}}
+.halo{position:relative;width:128px;height:128px;display:grid;place-items:center;margin-bottom:6px}
+.halo::before{content:"";position:absolute;inset:8px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--violet-2) 38%,transparent) 0%,transparent 68%);animation:glow 3.2s ease-in-out infinite}
+.halo::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px dashed color-mix(in srgb,var(--violet) 30%,transparent);animation:spin 26s linear infinite}
+.halo .logo.big{width:96px;height:96px;margin:0;position:relative}
+.halo.small{width:96px;height:96px}.halo.small .logo.big{width:72px;height:72px}
+@keyframes glow{0%,100%{transform:scale(.92);opacity:.7}50%{transform:scale(1.06);opacity:1}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.eyebrow{margin:0;color:var(--violet);font-weight:700;font-size:15px;letter-spacing:.01em}
+.hero h1{font-size:clamp(34px,8vw,48px);line-height:1.05;letter-spacing:-.025em;margin:6px 0 10px}
+.hero .lead{font-size:18px;color:var(--muted);margin:0 0 18px;max-width:34em}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:0 0 20px}
+.chips span{font-size:14px;font-weight:600;padding:6px 12px;border-radius:99px;background:var(--blank);color:var(--ink);border:1px solid var(--line)}
+.steps{list-style:none;padding:0;margin:0 0 22px;display:grid;gap:12px;width:100%;counter-reset:st}
+@media (min-width:640px){.steps{grid-template-columns:repeat(3,1fr)}}
+.steps li{counter-increment:st;position:relative;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px 14px 16px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+.steps li::before{content:counter(st);position:absolute;top:10px;left:12px;font-size:13px;font-weight:800;color:var(--muted)}
+.steps .ic{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,var(--violet),var(--violet-2))}
+.steps li:nth-child(2) .ic{background:linear-gradient(135deg,#F5A400,var(--sun));color:#3A2A00}
+.steps li:nth-child(3) .ic{background:linear-gradient(135deg,var(--mint),#3BC9A0)}
+.steps .ic svg{width:24px;height:24px}
+.steps b{font-size:17px}.steps span:last-child{font-size:14.5px;color:var(--muted);line-height:1.4}
+button.primary.big{font-size:20px;padding:16px 46px;min-height:58px;border-radius:18px}
+.hero .kbd{text-align:center}
+.hero .hard{text-align:left}.hero .tip{text-align:left}
+.review{width:100%;text-align:left;display:grid;gap:14px;margin:8px 0 6px}
+.rev{border-radius:18px;padding:14px 16px;border:1px solid var(--line);background:var(--card)}
+.rev h2{font-size:18px;margin:0 0 8px}
+.rev ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.rev li b{display:block}.rev li span{display:block;font-size:15px;color:var(--muted)}
+.rev.first{border-color:color-mix(in srgb,var(--coral) 45%,transparent);background:var(--coral-bg)}
+.rev.also{border-color:color-mix(in srgb,var(--sun) 55%,transparent);background:var(--sun-bg)}
+.rev .badge{display:inline-block!important;font-size:12.5px!important;font-weight:700;color:var(--mint)!important;background:var(--mint-bg);border-radius:99px;padding:1px 8px;margin-top:2px}
+.rev .more{margin:8px 0 0;font-size:14px;color:var(--muted)}
+.rev .words{display:flex;flex-wrap:wrap;gap:8px 14px;margin:0}
+.end .lead{margin-top:4px}
+.diag{font-weight:600}
+.note.reg{background:var(--sun-bg);color:var(--ink);border:1px solid color-mix(in srgb,var(--sun) 55%,transparent)}
+.back{margin-top:8px!important;font-weight:700;color:var(--mint)}
+@media (prefers-reduced-motion:reduce){.halo::before,.halo::after{animation:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top"><div class="in"><span class="brand"><svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
+<defs><linearGradient id="gh" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--violet)"/><stop offset="1" stop-color="var(--violet-2)"/></linearGradient>
+<radialGradient id="sh"><stop offset="0" stop-color="#FFF6D6"/><stop offset=".45" stop-color="var(--sun)"/><stop offset="1" stop-color="var(--sun)" stop-opacity="0"/></radialGradient></defs>
+<g class="lobes"><path d="M31 9C24 5 14 8 13 16C7 17 4 25 8 30C4 36 7 44 13 45C14 52 23 57 31 53Z" fill="url(#gh)"/>
+<path d="M33 9C40 5 50 8 51 16C57 17 60 25 56 30C60 36 57 44 51 45C50 52 41 57 33 53Z" fill="url(#gh)"/></g>
+<g fill="none" stroke="#fff" stroke-linecap="round" stroke-width="2" opacity=".38"><path d="M23 13C19 17 23 21 19 25M10 31C15 30 17 34 22 33M23 49C21 45 25 43 23 39"/><path d="M41 13C45 17 41 21 45 25M54 31C49 30 47 34 42 33M41 49C43 45 39 43 41 39"/></g>
+<path id="nh" d="M19 24L27 31L37 21L46 30L37 41L26 41Z" fill="none" stroke="#fff" stroke-width="1.6" stroke-linejoin="round" opacity=".85"/>
+<g fill="#fff" class="nodes"><circle cx="19" cy="24" r="2.6"/><circle cx="27" cy="31" r="2.6"/><circle cx="37" cy="21" r="2.6"/><circle cx="46" cy="30" r="2.6"/><circle cx="37" cy="41" r="2.6"/><circle cx="26" cy="41" r="2.6"/></g>
+<g class="spark"><circle r="6" fill="url(#sh)"><animateMotion dur="3.2s" repeatCount="indefinite" rotate="auto"><mpath href="#nh"/></animateMotion></circle></g>
+</svg>NeuroTutor</span>
+<div id="progress" role="progressbar" aria-label="Progreso" aria-valuemin="0" aria-valuemax="120" aria-valuenow="0"><div id="bar"></div></div><span id="count">0 / 120</span></div></header>
+<main id="app"></main>
+<script>
+/* NeuroTutor · banco de ítems (Lektionen 1–3, DaF kompakt neu A1)
+   Campos: id, l (Lektion), c (contenido), s (estructura), x (contexto léxico), t (tipo de tarea),
+   k (constructo), q (consigna), p (estímulo; {n} = hueco), m (b = huecos, s = oración, t = fichas),
+   a (respuestas: por hueco en m=b; lista de oraciones válidas en m=s/t), crit (palabras del constructo
+   que no admiten tolerancia ortográfica en m=s), tiles, v (estímulo visual), h1, h2, e (explicación),
+   lex (huecos léxicos: erratas = ortografía), er (E/R), pair, d (dificultad 1–3), g (grupos de estructura: no pueden aparecer entre E y R). */
+var ITEMS = [
+/* ============================ LEKTION 1 ============================ */
+{id:"L1-01",l:1,er:"E",pair:"p01",d:2,g:["aus-land"],c:"Origen con países con artículo",s:"aus der + país femenino",x:"países",t:"completar (2 huecos)",k:"preposición de origen + artículo",
+ q:"Completa con la preposición y el artículo que corresponden a este país.",p:"Anna kommt {0} {1} Schweiz.",m:"b",a:[["aus"],["der"]],
+ h1:"Para decir de dónde viene alguien se usa una preposición concreta. Además, Schweiz es uno de los pocos países que llevan artículo.",
+ h2:"La preposición es aus. Schweiz es femenino, pero después de aus el artículo no es die: es otra palabra de tres letras que empieza por d-.",
+ e:"Origen: aus + país. Los países femeninos (die Schweiz, die Türkei) se usan con aus der."},
+{id:"L1-02",l:1,er:"R",pair:"p01",d:2,g:["aus-land"],c:"Origen con países con artículo",s:"aus der + país femenino",x:"países",t:"completar (2 huecos)",k:"preposición de origen + artículo",
+ q:"Completa con la preposición y el artículo que corresponden a este país.",p:"Mehmet kommt {0} {1} Türkei.",m:"b",a:[["aus"],["der"]],
+ h1:"Para decir de dónde viene alguien se usa una preposición concreta. Türkei es uno de los países que llevan artículo.",
+ h2:"La preposición es aus. Türkei es femenino; después de aus el artículo no es die, sino otra palabra de tres letras que empieza por d-.",
+ e:"Origen: aus + país. Con países femeninos: aus der Türkei, aus der Schweiz."},
+{id:"L1-03",strict:1,l:1,er:"E",pair:"p02",d:1,g:["sein-praes"],c:"Verbo sein",s:"sein: ihr seid",x:"curso de idiomas",t:"completar",k:"conjugación de sein (ihr)",
+ q:"Completa con la forma correcta del verbo sein en presente.",p:"Ihr {0} neu im Sprachkurs, oder?",m:"b",a:[["seid"]],
+ h1:"Sein es irregular. Busca la forma para ihr: no se parece a la de wir ni a la de sie.",
+ h2:"La forma para ihr tiene cuatro letras: empieza por sei- y termina en -d.",
+ e:"Paradigma de sein: ich bin, du bist, er/sie/es ist, wir sind, ihr seid, sie/Sie sind. Ojo: seid (verbo) no es seit."},
+{id:"L1-04",strict:1,l:1,er:"R",pair:"p02",d:1,g:["sein-praes"],c:"Verbo sein",s:"sein: ihr seid",x:"estudios",t:"completar",k:"conjugación de sein (ihr)",
+ q:"Completa con la forma correcta del verbo sein en presente.",p:"Tarik und Leyla, {0} ihr Studenten?",m:"b",a:[["seid"]],
+ h1:"Sein es irregular. Fíjate en el sujeto de la pregunta (ihr) y busca su forma, distinta de la de wir.",
+ h2:"La forma para ihr tiene cuatro letras: empieza por sei- y termina en -d.",
+ e:"ihr seid. Paradigma: ich bin, du bist, er ist, wir sind, ihr seid, sie/Sie sind."},
+{id:"L1-05",strict:1,l:1,er:"E",pair:"p03",d:2,g:["stamm-t"],c:"Verbos con raíz en -t",s:"arbeiten: -e- de unión",x:"trabajo",t:"completar",k:"conjugación de arbeiten (du)",
+ q:"Completa con la forma correcta del verbo arbeiten.",p:"Du {0} schon, oder?",m:"b",a:[["arbeitest"]],
+ h1:"La raíz de arbeiten termina en -t. Con du y con er/sie/es, estos verbos necesitan algo más antes de la terminación.",
+ h2:"Entre la raíz arbeit- y la terminación de du (-st) hay que añadir una vocal: -e-.",
+ e:"Si la raíz termina en -t o -d, se añade -e- con du, er/sie/es e ihr: du arbeitest, er arbeitet, ihr arbeitet."},
+{id:"L1-06",strict:1,l:1,er:"R",pair:"p03",d:2,g:["stamm-t"],c:"Verbos con raíz en -t",s:"arbeiten: -e- de unión",x:"profesiones",t:"completar",k:"conjugación de arbeiten (sie)",
+ q:"Completa con la forma correcta del verbo arbeiten.",p:"Und Josephine? Sie {0} schon. Sie ist Ingenieurin.",m:"b",a:[["arbeitet"]],
+ h1:"La raíz de arbeiten termina en -t. Con er/sie/es se necesita algo más antes de la terminación.",
+ h2:"Entre la raíz arbeit- y la terminación de sie (-t) hay que añadir una -e-.",
+ e:"sie arbeitet: raíz en -t + -e- + -t (igual que du arbeitest, ihr arbeitet)."},
+{id:"L1-07",ord:1,l:1,er:"E",pair:"p04",d:2,g:["inv"],c:"Posición del verbo",s:"Inversión: verbo en posición 2",x:"estudios",t:"transformación",k:"orden: verbo en posición 2 con inversión del sujeto",
+ q:"Reescribe la oración empezando por «In Tübingen». Mantén todas las palabras.",p:"Ich studiere in Tübingen Medizin.",m:"s",a:["In Tübingen studiere ich Medizin."],crit:[],
+ h1:"En la oración afirmativa alemana el verbo conjugado ocupa siempre la misma posición, aunque la oración empiece por otro elemento.",
+ h2:"«In Tübingen» ocupa la posición 1. El verbo va en la posición 2 y el sujeto ich pasa detrás del verbo.",
+ e:"El verbo conjugado va en posición 2. Si la posición 1 la ocupa otro elemento, el sujeto va detrás del verbo."},
+{id:"L1-08",ord:1,l:1,er:"R",pair:"p04",d:2,g:["inv"],c:"Posición del verbo",s:"Inversión: verbo en posición 2",x:"aprender idiomas",t:"transformación",k:"orden: verbo en posición 2 con inversión del sujeto",
+ q:"Reescribe la oración empezando por «Jetzt». Mantén todas las palabras.",p:"Wir lernen jetzt Deutsch.",m:"s",a:["Jetzt lernen wir Deutsch."],crit:[],
+ h1:"En la oración afirmativa alemana el verbo conjugado ocupa siempre la misma posición, aunque la oración empiece por otro elemento.",
+ h2:"«Jetzt» ocupa la posición 1. El verbo va en la posición 2 y el sujeto wir pasa detrás del verbo.",
+ e:"Jetzt (pos. 1) + lernen (pos. 2) + wir. El verbo conjugado nunca se mueve de la posición 2."},
+{id:"L1-09",strict:1,l:1,er:"E",pair:"p05",d:2,g:["e-i"],c:"Verbos con cambio vocálico",s:"sprechen: e → i",x:"lenguas",t:"completar",k:"conjugación de sprechen (er)",
+ q:"Completa con la forma correcta del verbo sprechen.",p:"Alex {0} vierzehn Sprachen.",m:"b",a:[["spricht"]],
+ h1:"Sprechen cambia la vocal de la raíz con du y con er/sie/es.",
+ h2:"Con er/sie/es la e de la raíz pasa a i. La forma empieza por sprich-.",
+ e:"sprechen: ich spreche, du sprichst, er/sie/es spricht (e → i), wir sprechen."},
+{id:"L1-10",strict:1,l:1,er:"R",pair:"p05",d:2,g:["e-i"],c:"Verbos con cambio vocálico",s:"sprechen: e → i",x:"lenguas",t:"completar",k:"conjugación de sprechen (du)",
+ q:"Completa con la forma correcta del verbo sprechen.",p:"{0} du auch Französisch?",m:"b",a:[["sprichst"]],
+ h1:"Sprechen cambia la vocal de la raíz con du y con er/sie/es.",
+ h2:"Con du la e de la raíz pasa a i. La forma empieza por sprich- y lleva la terminación de du.",
+ e:"du sprichst: e → i + terminación -st."},
+{id:"L1-11",strict:1,l:1,d:1,g:["heissen"],c:"Verbos con raíz en -ß",s:"heißen: du heißt",x:"presentarse",t:"completar",k:"conjugación de heißen (du)",
+ q:"Completa con la forma correcta del verbo heißen.",p:"Das ist Enrique. Und wie {0} du?",m:"b",a:[["heißt"]],
+ h1:"La raíz de heißen termina en -ß. Piensa qué pasa con la -s- de la terminación de du.",
+ h2:"Con du no se añade otra s: raíz heiß- + -t.",
+ e:"Si la raíz termina en -s, -ß o -z, con du solo se añade -t: du heißt."},
+{id:"L1-12",l:1,d:1,g:[],c:"Verbos regulares",s:"Conjugación regular: wir",x:"estudios",t:"completar",k:"concordancia sujeto compuesto–verbo",
+ q:"Completa con la forma correcta del verbo studieren.",p:"Mia und ich {0} zusammen Informatik.",m:"b",a:[["studieren"]],
+ h1:"Fíjate en el sujeto: «Mia und ich» equivale a un pronombre en plural.",
+ h2:"«Mia und ich» = wir. Con wir la forma coincide con el infinitivo.",
+ e:"Mia und ich = wir → wir studieren."},
+{id:"L1-13",ord:1,l:1,d:2,g:["janein"],c:"Preguntas de sí/no",s:"Ja/Nein-Frage: verbo en posición 1",x:"vivienda",t:"transformación",k:"orden en la pregunta de sí/no",
+ q:"Transforma la afirmación en una pregunta de sí/no (Ja/Nein-Frage).",p:"Du wohnst in Tübingen.",m:"s",a:["Wohnst du in Tübingen?"],crit:[],
+ h1:"En las preguntas de sí/no el verbo conjugado no está en la posición 2.",
+ h2:"Empieza la pregunta con el verbo conjugado y coloca después el sujeto.",
+ e:"Ja/Nein-Frage: verbo conjugado en posición 1 + sujeto: Wohnst du …?"},
+{id:"L1-14",l:1,d:1,g:["wfrage"],c:"Preguntas con palabra interrogativa",s:"W-Frage: verbo en posición 2",x:"vivienda",t:"ordenación",k:"orden en la W-Frage",
+ q:"Ordena los elementos para formar una pregunta.",m:"t",tiles:["du","jetzt","wohnst","wo"],a:["Wo wohnst du jetzt?"],
+ h1:"En una pregunta con palabra interrogativa, cada elemento tiene un lugar fijo. ¿Qué va primero?",
+ h2:"Posición 1: la palabra interrogativa. Posición 2: el verbo conjugado. Después, el sujeto.",
+ e:"W-Frage: Wo (pos. 1) + wohnst (pos. 2) + du + jetzt."},
+{id:"L1-15",dg:[["\\bdir\\b","Has usado la forma informal (dir). Con el profesor se usa Sie: ¿qué pronombre corresponde a Sie en esta fórmula?"]],l:1,d:2,g:["formal"],c:"Saludar: registro formal",s:"Registro formal (Sie)",x:"saludos",t:"producción escrita",k:"fórmula formal (Sie)",
+ q:"Pregunta al profesor Brandt cómo está. Usa la forma formal (Sie).",m:"s",
+ a:["Wie geht es Ihnen?","Wie geht's Ihnen?","Wie geht es Ihnen, Herr Brandt?","Wie geht's Ihnen, Herr Brandt?","Herr Brandt, wie geht es Ihnen?","Guten Tag, Herr Brandt, wie geht es Ihnen?","Guten Tag, Herr Brandt! Wie geht es Ihnen?"],crit:["ihnen"],
+ h1:"La pregunta empieza por «Wie geht es …?». Lo que cambia entre formal e informal es la última palabra.",
+ h2:"La forma informal es «Wie geht es dir?». Para Sie necesitas otro pronombre, que empieza por I- y se escribe con mayúscula.",
+ e:"Formal: Wie geht es Ihnen? · Informal: Wie geht es dir?"},
+{id:"L1-16",dg:[["\\bsie\\b|\\bihr\\b","Has usado la forma formal. Con una compañera se usa du."]],l:1,d:1,g:["formal"],c:"Presentarse: registro informal",s:"Registro informal (du)",x:"presentarse",t:"producción escrita",k:"pregunta informal por el nombre",
+ q:"Pregunta a una compañera del curso cómo se llama. Usa la forma informal (du).",m:"s",a:["Wie heißt du?","Wie ist dein Name?"],crit:["du","dein"],
+ h1:"Necesitas una palabra interrogativa, el verbo heißen conjugado para du y el pronombre.",
+ h2:"Empieza por Wie. El verbo heißen con du termina en -t.",
+ e:"Formal: Wie heißen Sie? También es correcto: Wie ist dein Name?"},
+{id:"L1-17",dg:[["ihnen","Has usado la forma formal (Ihnen). Aquí se pide la informal."],["^(?!.*\\b(dir)\\b)","Falta devolver la pregunta: Und …?"]],l:1,d:1,g:["formal"],c:"Reaccionar a un saludo",s:"Responder a Wie geht's? y devolver la pregunta",x:"saludos",t:"producción escrita",k:"respuesta informal + devolver la pregunta",
+ q:"Alguien te pregunta «Wie geht's?». Responde que estás bien o muy bien, da las gracias y devuelve la pregunta (informal).",m:"s",
+ a:(function () { // todas las combinaciones razonables: estado × agradecimiento × pregunta devuelta
+   var st = ["sehr gut", "gut", "mir geht es gut", "mir geht es sehr gut", "mir geht's gut", "mir geht's sehr gut", "es geht mir gut", "es geht mir sehr gut"],
+       back = ["Und dir?", "Und wie geht es dir?", "Und wie geht's dir?", "Wie geht es dir?", "Wie geht's dir?"], out = [];
+   var cap = function (x) { return x.charAt(0).toUpperCase() + x.slice(1); };
+   out.push("Sehr gut, danke. Und dir?");
+   st.forEach(function (e) { back.forEach(function (b) {
+     out.push(cap(e) + ", danke. " + b); out.push("Danke, " + e + ". " + b); out.push("Danke, " + e + ", " + b.toLowerCase());
+     out.push(cap(e) + ", vielen Dank. " + b); out.push("Danke schön, " + e + ". " + b);
+   }); });
+   return out.filter(function (x, k) { return out.indexOf(x) === k; });
+ })(),crit:["dir"],
+ h1:"La respuesta tiene tres partes: cómo estás, el agradecimiento y la pregunta devuelta en forma informal.",
+ h2:"Bien = gut (muy bien = sehr gut); gracias = danke. Para devolver la pregunta: «Und …?» con el pronombre de du en esta fórmula (empieza por d-).",
+ e:"También es correcto: Mir geht's gut, danke. Und dir? · Formal: Und Ihnen?"},
+{id:"L1-18",lex:[0],l:1,d:1,g:[],c:"Lenguas",s:"Nombres de lenguas en -isch",x:"países y lenguas",t:"completar",k:"vocabulario: lenguas",
+ q:"Completa con la lengua oficial del país mencionado (en alemán).",p:"Pedro kommt aus Portugal. Er spricht {0}.",m:"b",a:[["Portugiesisch"]],
+ h1:"Casi todos los nombres de lenguas en alemán terminan igual. Parte del nombre del país.",
+ h2:"La terminación es -isch. Portugal → Portugies- …",
+ e:"Portugiesisch. Las lenguas terminan casi siempre en -isch y se escriben con mayúscula."},
+{id:"L1-19",lex:[0],l:1,d:3,g:[],c:"Nacionalidades",s:"Nacionalidad femenina en -in",x:"países y nacionalidades",t:"completar",k:"vocabulario: nacionalidad (femenino)",
+ q:"Completa con la nacionalidad en forma femenina.",p:"Marie kommt aus Frankreich. Sie ist {0}.",m:"b",a:[["Französin"]],
+ h1:"La forma femenina se construye a partir de la masculina, que en este caso termina en -e.",
+ h2:"Masculino: der Franzose. Para el femenino se quita la -e final, se añade -in y la o lleva Umlaut.",
+ e:"der Franzose → die Französin."},
+{id:"L1-20",lex:[0],l:1,d:2,g:[],c:"Nacionalidades",s:"Nacionalidad masculina en -aner",x:"países y nacionalidades",t:"completar",k:"vocabulario: nacionalidad (masculino)",
+ q:"Completa con la nacionalidad en forma masculina.",p:"Tarik kommt aus Marokko. Er ist {0}.",m:"b",a:[["Marokkaner"]],
+ h1:"Muchas nacionalidades masculinas se forman con el nombre del país y una terminación.",
+ h2:"Marokko → Marokk- + una terminación de cuatro letras que empieza por -a.",
+ e:"Marokko → der Marokkaner / die Marokkanerin."},
+{id:"L1-21",lex:[0],l:1,d:2,g:[],c:"Estudios",s:"Studienfächer",x:"universidad",t:"completar",k:"vocabulario: carreras",
+ q:"Completa con el nombre en alemán de la carrera indicada: Derecho.",p:"Ich studiere {0}.",m:"b",a:[["Jura","Rechtswissenschaften"]],
+ h1:"Es una palabra corta de origen latino que en alemán se usa sin artículo.",
+ h2:"Tiene cuatro letras y empieza por J-.",
+ e:"Jura (también: die Rechtswissenschaften)."},
+{id:"L1-22",strict:1,l:1,d:2,g:["zahlen"],c:"Números",s:"Números 13–19",x:"números",t:"producción (número en letras)",k:"numerales 13–19",
+ q:"Escribe el número en letras.",p:"17 → {0}",m:"b",a:[["siebzehn"]],
+ h1:"Del 13 al 19 se forman con la unidad + zehn, pero en este número la unidad pierde letras.",
+ h2:"En 17, sieben pierde su sílaba final -en.",
+ e:"siebzehn (no siebenzehn). También: sechzehn (sechs pierde la -s)."},
+{id:"L1-23",strict:1,l:1,d:2,g:["zahlen"],c:"Números",s:"Decenas: 30",x:"números",t:"producción (número en letras)",k:"numerales: decenas",
+ q:"Escribe el número en letras.",p:"30 → {0}",m:"b",a:[["dreißig"]],
+ h1:"Las decenas terminan casi todas en -zig, pero 30 es una excepción.",
+ h2:"Empieza por drei- y termina en -ßig.",
+ e:"dreißig: es la única decena que termina en -ßig."},
+{id:"L1-24",strict:1,l:1,d:2,g:["zahlen"],c:"Números",s:"Números compuestos: unidad + und + decena",x:"números",t:"producción (número en letras)",k:"numerales compuestos",
+ q:"Escribe el número en letras.",p:"68 → {0}",m:"b",a:[["achtundsechzig"]],
+ h1:"Las cifras de dos dígitos se leen al revés que en español: primero la unidad, luego und y después la decena.",
+ h2:"Unidad: acht. Decena: 60, que pierde la -s de sechs. Todo en una sola palabra.",
+ e:"achtundsechzig = acht + und + sechzig (no sechszig)."},
+{id:"L1-25",dg:[["\\bhabe\\b","En alemán la edad se expresa con sein, no con haben."]],l:1,d:1,g:[],c:"Hablar de la edad",s:"Ich bin … Jahre alt",x:"datos personales",t:"producción escrita",k:"expresión de la edad con sein",
+ q:"Responde con una oración completa. Tienes 21 años.",p:"Wie alt bist du?",m:"s",
+ a:["Ich bin 21 Jahre alt.","Ich bin einundzwanzig Jahre alt.","Ich bin 21.","Ich bin einundzwanzig."],crit:["bin"],
+ h1:"En alemán la edad no se expresa con el verbo «tener».",
+ h2:"Usa el verbo sein (Ich bin …) y termina con «Jahre alt».",
+ e:"La edad se expresa con sein: Ich bin … Jahre alt (no con haben)."},
+{id:"L1-26",l:1,d:2,g:["artikel"],c:"Objetos del aula",s:"Artículo determinado: der / das / die",x:"aula",t:"completar (3 huecos)",k:"género de sustantivos",
+ q:"Completa con el artículo determinado (der, das o die).",p:"{0} Kugelschreiber · {1} Tafel · {2} Heft",m:"b",a:[["der"],["die"],["das"]],
+ h1:"Recupera cada sustantivo con su artículo, tal como lo aprendiste con los objetos del aula.",
+ h2:"Hay exactamente un sustantivo de cada género: uno masculino, uno femenino y uno neutro.",
+ e:"der Kugelschreiber, die Tafel, das Heft. Aprende siempre el sustantivo con su artículo."},
+{id:"L1-27",strict:1,l:1,d:2,g:["plural"],c:"Plural",s:"Plural con Umlaut + -er",x:"aula",t:"completar",k:"formación del plural",
+ q:"Escribe la forma de plural.",p:"das Buch → die {0}",m:"b",a:[["Bücher"]],
+ h1:"Este sustantivo forma el plural con una terminación y además cambia la vocal.",
+ h2:"La u lleva Umlaut y la terminación es -er.",
+ e:"Plural con Umlaut + -er: das Buch → die Bücher."},
+{id:"L1-28",strict:1,l:1,d:2,g:["plural"],c:"Plural",s:"Plural con Umlaut + -e",x:"aula",t:"completar",k:"formación del plural",
+ q:"Escribe la forma de plural.",p:"der Ball → die {0}",m:"b",a:[["Bälle"]],
+ h1:"En este plural cambia la vocal y se añade una terminación corta.",
+ h2:"La a pasa a ä y se añade -e.",
+ e:"Plural con Umlaut + -e: der Ball → die Bälle."},
+{id:"L1-29",strict:1,l:1,d:1,g:["plural"],c:"Plural",s:"Plural de femeninos en -in",x:"profesiones",t:"completar",k:"formación del plural",
+ q:"Escribe la forma de plural.",p:"die Lehrerin → die {0}",m:"b",a:[["Lehrerinnen"]],
+ h1:"Los sustantivos femeninos en -in tienen un plural muy regular.",
+ h2:"Se duplica la n y se añade -en.",
+ e:"-in → -innen: die Lehrerin → die Lehrerinnen."},
+{id:"L1-30",lex:[1],l:1,d:1,g:["artikel"],c:"Objetos del aula",s:"Vocabulario con artículo",x:"aula",t:"interpretación de estímulo visual",k:"vocabulario + género",
+ q:"¿Cómo se dice en alemán? Escribe el artículo determinado y el sustantivo.",p:"{0} {1}",m:"b",a:[["der"],["Apfel"]],v:{type:"apple"},
+ h1:"Es una fruta que aparece entre los objetos del aula de la Lektion 1.",
+ h2:"La palabra empieza por Ap- y es masculina.",
+ e:"Masculino; plural: die Äpfel."},
+{id:"L1-31",l:1,d:1,g:["wfrage"],c:"Palabras interrogativas",s:"wo / woher / wie",x:"vivienda",t:"completar",k:"selección de la palabra interrogativa",
+ q:"Completa con la palabra interrogativa adecuada: wie, wo o woher.",p:"{0} wohnst du? – In Tübingen.",m:"b",a:[["wo"]],
+ h1:"La respuesta indica el lugar donde alguien vive, no su origen.",
+ h2:"Woher pregunta por el origen y wie por el modo o el nombre. Necesitas la que pregunta por el lugar.",
+ e:"Wo? → lugar (In Tübingen). Woher? → origen (Aus …)."},
+{id:"L1-32",dg:[["studierst","Has copiado la forma de du. Conjuga studieren para ich."]],l:1,d:1,g:[],c:"Responder preguntas",s:"Respuesta con el verbo conjugado (ich)",x:"estudios",t:"producción escrita",k:"conjugación en la respuesta",
+ q:"Responde con una oración completa usando la información entre paréntesis.",p:"Was studierst du? (Physik)",m:"s",a:["Ich studiere Physik."],crit:["studiere"],
+ h1:"Retoma el verbo de la pregunta, pero conjúgalo para ich.",
+ h2:"Raíz studier- + terminación de ich (-e), y después la carrera.",
+ e:"El verbo de la pregunta se conjuga para ich: du studierst → ich studiere."},
+{id:"L1-33",l:1,d:1,g:[],c:"Adverbios schon / noch nicht",s:"schon / noch nicht",x:"estudios y trabajo",t:"completar",k:"selección léxica",
+ q:"Completa con schon o noch nicht.",p:"Ich bin Schülerin. Ich studiere {0}.",m:"b",a:[["noch nicht"]],
+ h1:"Una alumna de colegio, ¿estudia ya en la universidad?",
+ h2:"Necesitas la expresión que significa «todavía no».",
+ e:"Ich studiere noch nicht (= todavía no). Ich arbeite schon (= ya)."},
+{id:"L1-34",l:1,d:1,g:["aus-land"],c:"Origen y residencia",s:"aus (origen) / in (lugar)",x:"países y ciudades",t:"completar (2 huecos)",k:"preposiciones de origen y lugar",
+ q:"Completa con la preposición adecuada: aus o in.",p:"Ich komme {0} Brasilien, aber ich wohne jetzt {1} Tübingen.",m:"b",a:[["aus"],["in"]],
+ h1:"Una preposición indica de dónde vienes y la otra dónde vives.",
+ h2:"Con kommen (origen) se usa una; con wohnen (lugar), la otra.",
+ e:"kommen aus (origen) · wohnen in (lugar)."},
+{id:"L1-35",l:1,d:2,g:["formal","poss"],c:"Datos personales: registro formal",s:"Posesivo formal Ihre",x:"dirección",t:"producción escrita",k:"posesivo de Sie",
+ q:"Pregunta a la señora Brandt por su dirección. Usa la forma formal y la palabra Adresse.",m:"s",
+ a:["Wie ist Ihre Adresse?","Frau Brandt, wie ist Ihre Adresse?","Wie ist Ihre Adresse, Frau Brandt?"],crit:["ihre"],
+ h1:"La pregunta empieza por «Wie ist …». Lo importante es el posesivo que corresponde a Sie.",
+ h2:"El posesivo de Sie empieza por I- (con mayúscula). Adresse es femenino, así que lleva -e.",
+ e:"Con Sie: Ihr/Ihre; con du: dein/deine."},
+{id:"L1-36",l:1,d:2,g:["formal","poss"],c:"Datos personales: registro informal",s:"Posesivo informal deine",x:"teléfono",t:"producción escrita",k:"posesivo de du",
+ q:"Pregunta a un compañero por su número de móvil. Usa la forma informal y la palabra Handynummer.",m:"s",
+ a:["Wie ist deine Handynummer?"],crit:["deine"],
+ h1:"Es la misma estructura que para preguntar la dirección: «Wie ist …» + posesivo + Handynummer.",
+ h2:"Usa el posesivo de du. Handynummer es femenino (die Nummer), así que el posesivo termina en -e.",
+ e:"Con du: dein/deine. Formal: Wie ist Ihre Handynummer?"},
+{id:"L1-37",l:1,d:1,g:[],c:"Corrección: concordancia",s:"Conjugación regular: wir",x:"países",t:"corrección",k:"concordancia sujeto–verbo",
+ q:"Corrige el error de conjugación. Escribe la oración completa.",p:"Wir kommt aus Spanien.",m:"s",a:["Wir kommen aus Spanien."],crit:["kommen"],
+ h1:"Comprueba si la forma verbal concuerda con el sujeto.",
+ h2:"El sujeto es wir: la forma del verbo coincide con el infinitivo.",
+ e:"wir kommen (ihr kommt)."},
+{id:"L1-38",ord:1,l:1,d:1,g:["wfrage"],c:"Corrección: orden en la pregunta",s:"W-Frage: verbo en posición 2",x:"origen",t:"corrección",k:"orden en la W-Frage",
+ q:"Corrige únicamente el orden de las palabras.",p:"Woher du kommst?",m:"s",a:["Woher kommst du?"],crit:[],
+ h1:"En las preguntas con palabra interrogativa, el verbo tiene una posición fija.",
+ h2:"Woher ocupa la posición 1; el verbo va en la posición 2, antes del sujeto.",
+ e:"Woher (1) + kommst (2) + du."},
+{id:"L1-39",l:1,d:1,g:[],c:"Lenguaje del aula",s:"Instrucción: verbo + Sie",x:"instrucciones del curso",t:"producción escrita",k:"imperativo formal",
+ q:"Escribe en alemán la instrucción del libro, en forma Sie: «Escuche».",m:"s",a:["Hören Sie.","Hören Sie bitte."],crit:["hören","sie"],
+ h1:"Las instrucciones del libro siguen siempre la misma estructura: verbo + Sie.",
+ h2:"Usa el verbo que significa «oír», en infinitivo, delante de Sie.",
+ e:"Instrucción formal: verbo en infinitivo + Sie (también: Lesen Sie, Schreiben Sie)."},
+{id:"L1-40",lex:[0, 1],l:1,d:1,g:[],c:"Datos personales",s:"Familienname / Vorname",x:"formulario",t:"completar (2 huecos)",k:"vocabulario: nombre y apellido",
+ q:"Completa: en el primer hueco, la palabra para «apellido»; en el segundo, la palabra para «nombre de pila».",p:"Mein {0} ist Brunner, mein {1} ist Mia.",m:"b",a:[["Familienname","Nachname"],["Vorname"]],
+ h1:"Las dos palabras son compuestas con Name.",
+ h2:"Apellido: Familien- o Nach- + name. Nombre de pila: Vor- + name.",
+ e:"der Familienname / der Nachname · der Vorname."},
+/* ============================ LEKTION 2 ============================ */
+{id:"L2-01",l:2,er:"E",pair:"p06",d:2,g:["akk"],c:"Acusativo",s:"Artículo indeterminado masc. en acusativo: einen",x:"tecnología",t:"completar",k:"artículo indeterminado en acusativo (masc.)",
+ q:"Completa con el artículo indeterminado en acusativo.",p:"Ich brauche {0} Computer für die Uni.",m:"b",a:[["einen"]],
+ h1:"Computer es masculino y aquí es el complemento directo (lo que se necesita).",
+ h2:"En acusativo solo cambia el masculino: al artículo ein se le añade una terminación de dos letras.",
+ e:"Acusativo masculino: ein → einen. Neutro (ein) y femenino (eine) no cambian."},
+{id:"L2-02",l:2,er:"R",pair:"p06",d:2,g:["akk"],c:"Acusativo",s:"Artículo indeterminado masc. en acusativo: einen",x:"tecnología",t:"completar",k:"artículo indeterminado en acusativo (masc.)",
+ q:"Completa con el artículo indeterminado en acusativo.",p:"Hast du {0} Fotoapparat?",m:"b",a:[["einen"]],
+ h1:"Fotoapparat es masculino y es el complemento directo de haben.",
+ h2:"En acusativo solo cambia el masculino: al artículo ein se le añade una terminación de dos letras.",
+ e:"haben + acusativo: der Fotoapparat → einen Fotoapparat."},
+{id:"L2-03",l:2,er:"E",pair:"p07",d:2,g:["kein","akk"],c:"Negación con kein-",s:"keinen (masc. acusativo)",x:"tecnología",t:"completar",k:"artículo negativo en acusativo (masc.)",
+ q:"Responde negativamente. Completa con la forma correcta de kein-.",p:"Hast du einen Laptop? – Nein, ich habe {0} Laptop.",m:"b",a:[["keinen"]],
+ h1:"kein- toma exactamente las mismas terminaciones que el artículo indeterminado de la pregunta.",
+ h2:"Laptop es masculino y está en acusativo: añade a k- la misma forma que tiene el artículo de la pregunta.",
+ e:"einen Laptop → keinen Laptop."},
+{id:"L2-04",l:2,er:"R",pair:"p07",d:2,g:["kein","akk"],c:"Negación con kein-",s:"keinen (masc. acusativo)",x:"tecnología",t:"completar",k:"artículo negativo en acusativo (masc.)",
+ q:"Responde negativamente. Completa con la forma correcta de kein-.",p:"Brauchst du einen USB-Stick? – Nein, ich brauche {0} USB-Stick.",m:"b",a:[["keinen"]],
+ h1:"kein- toma exactamente las mismas terminaciones que el artículo indeterminado de la pregunta.",
+ h2:"USB-Stick es masculino y está en acusativo: añade a k- la misma forma que tiene el artículo de la pregunta.",
+ e:"einen USB-Stick → keinen USB-Stick."},
+{id:"L2-05",l:2,er:"E",pair:"p08",d:3,g:["poss"],c:"Posesivos",s:"Posesivo de 3.ª persona: ihr (poseedora femenina)",x:"familia",t:"completar",k:"elección del posesivo según el poseedor",
+ q:"Completa con el artículo posesivo adecuado.",p:"Anna hat einen Sohn. {0} Sohn heißt Felix.",m:"b",a:[["ihr"]],
+ h1:"El posesivo depende de quién es el poseedor, no del sustantivo poseído.",
+ h2:"La poseedora es Anna, es decir, sie. ¿Qué posesivo corresponde a sie? (No es sein.) Sohn es masculino nominativo: sin terminación.",
+ e:"Poseedor er → sein; poseedora sie → ihr. Anna → Ihr Sohn."},
+{id:"L2-06",l:2,er:"R",pair:"p08",d:3,g:["poss"],c:"Posesivos",s:"Posesivo de 3.ª persona: ihr (poseedora femenina)",x:"familia",t:"completar",k:"elección del posesivo según el poseedor",
+ q:"Completa con el artículo posesivo adecuado.",p:"Mia hat einen Bruder. {0} Bruder heißt Lukas.",m:"b",a:[["ihr"]],
+ h1:"El posesivo depende de quién es el poseedor, no del sustantivo poseído.",
+ h2:"La poseedora es Mia, es decir, sie. ¿Qué posesivo corresponde a sie? (No es sein.) Bruder es masculino nominativo: sin terminación.",
+ e:"Mia (sie) → Ihr Bruder. Con er sería sein Bruder."},
+{id:"L2-07",l:2,er:"E",pair:"p09",d:2,g:["konn"],c:"Conectores",s:"aber (contraste)",x:"restaurante",t:"completar",k:"conector de contraste",
+ q:"Completa con el conector adecuado: und, aber u oder.",p:"Ich möchte ein Wiener Schnitzel, {0} ohne Pommes frites.",m:"b",a:[["aber"]],
+ h1:"Pides el plato con una restricción: la segunda parte limita lo que dice la primera.",
+ h2:"Necesitas el conector de contraste, no el de suma (und) ni el de alternativa (oder).",
+ e:"aber expresa contraste o restricción: …, aber ohne Pommes frites."},
+{id:"L2-08",l:2,er:"R",pair:"p09",d:2,g:["konn"],c:"Conectores",s:"aber (contraste)",x:"bebidas",t:"completar",k:"conector de contraste",
+ q:"Completa con el conector adecuado: und, aber u oder.",p:"Ich trinke ein Mineralwasser, {0} ohne Kohlensäure.",m:"b",a:[["aber"]],
+ h1:"Pides la bebida con una restricción: la segunda parte limita lo que dice la primera.",
+ h2:"Necesitas el conector de contraste, no el de suma (und) ni el de alternativa (oder).",
+ e:"…, aber ohne Kohlensäure: aber marca la restricción."},
+{id:"L2-09",l:2,er:"E",pair:"p10",d:2,g:["moechte"],c:"möchte + infinitivo",s:"Verbo conjugado en pos. 2, infinitivo al final",x:"restaurante",t:"ordenación",k:"posición del verbo conjugado y del infinitivo",
+ q:"Ordena los elementos para formar una oración afirmativa.",m:"t",tiles:["möchten","bestellen","wir","gerne"],a:["Wir möchten gerne bestellen.","Gerne möchten wir bestellen."],
+ h1:"Hay dos verbos: uno conjugado y otro en infinitivo. Cada uno tiene su posición.",
+ h2:"El verbo conjugado (möchten) va en la posición 2; el infinitivo (bestellen) va al final.",
+ e:"möchte- conjugado en posición 2 + infinitivo al final."},
+{id:"L2-10",l:2,er:"R",pair:"p10",d:2,g:["moechte"],c:"möchte + infinitivo",s:"Verbo conjugado en pos. 2, infinitivo al final",x:"bebidas",t:"ordenación",k:"posición del verbo conjugado y del infinitivo",
+ q:"Ordena los elementos para formar una pregunta.",m:"t",tiles:["trinken","du","möchtest","was"],a:["Was möchtest du trinken?"],
+ h1:"Hay dos verbos: uno conjugado y otro en infinitivo. Cada uno tiene su posición.",
+ h2:"Posición 1: la palabra interrogativa. Posición 2: möchtest. El infinitivo (trinken) va al final.",
+ e:"Was (1) + möchtest (2) + du + trinken (final)."},
+{id:"L2-11",strict:1,l:2,d:2,g:["e-i"],c:"Verbos con cambio vocálico",s:"nehmen: du nimmst",x:"restaurante",t:"completar",k:"conjugación de nehmen (du)",
+ q:"Completa con la forma correcta del verbo nehmen.",p:"Was {0} du, Stefanie?",m:"b",a:[["nimmst"]],
+ h1:"Nehmen es irregular con du y er/sie/es: cambia la vocal y algo más en la raíz.",
+ h2:"La e pasa a i, la h desaparece y la m se duplica: nimm- + terminación de du.",
+ e:"ich nehme, du nimmst, er nimmt."},
+{id:"L2-12",strict:1,l:2,d:2,g:["e-i"],c:"Verbos con cambio vocálico",s:"essen: ihr esst (sin cambio)",x:"comida",t:"completar",k:"conjugación de essen (ihr)",
+ q:"Completa con la forma correcta del verbo essen.",p:"{0} ihr gern Fisch?",m:"b",a:[["esst"]],
+ h1:"El cambio vocálico de essen solo ocurre con du y con er/sie/es. ¿Qué sujeto tienes aquí?",
+ h2:"Con ihr la vocal no cambia: raíz ess- + -t.",
+ e:"ihr esst (sin cambio vocálico). Pero: du isst, er isst."},
+{id:"L2-13",l:2,d:2,g:["artikel"],c:"Artículo determinado e indeterminado",s:"Información nueva / conocida",x:"objetos antiguos",t:"completar (2 huecos)",k:"elección determinado/indeterminado",
+ q:"Completa con el artículo adecuado. La primera vez la información es nueva (indeterminado); la segunda ya es conocida (determinado).",p:"Das ist {0} Kamera. {1} Kamera ist sehr alt.",m:"b",a:[["eine"],["die"]],
+ h1:"Kamera es femenino. La primera mención presenta algo nuevo; la segunda se refiere a algo ya mencionado.",
+ h2:"Primer hueco: artículo indeterminado femenino. Segundo hueco: artículo determinado femenino.",
+ e:"Información nueva → eine Kamera; información conocida → die Kamera."},
+{id:"L2-14",l:2,d:2,g:["akk"],c:"Acusativo",s:"Artículo determinado masc. en acusativo: den",x:"tecnología",t:"completar",k:"artículo determinado en acusativo (masc.)",
+ q:"Completa con el artículo determinado.",p:"Ich benutze {0} Laptop für die Uni.",m:"b",a:[["den"]],
+ h1:"Laptop es masculino y aquí es el complemento directo.",
+ h2:"En acusativo el artículo determinado masculino der cambia: la r se convierte en n.",
+ e:"der Laptop → den Laptop (acusativo). das y die no cambian."},
+{id:"L2-15",l:2,d:2,g:["akk"],c:"Acusativo",s:"Femenino en acusativo: eine",x:"tecnología",t:"completar",k:"artículo indeterminado en acusativo (fem.)",
+ q:"Completa con el artículo indeterminado.",p:"Wir haben {0} Kamera und zwei Smartphones.",m:"b",a:[["eine"]],
+ h1:"Kamera es femenino. ¿Cambia el artículo femenino en acusativo?",
+ h2:"El femenino no cambia en acusativo: es igual que en nominativo.",
+ e:"die Kamera → eine Kamera (nominativo y acusativo iguales)."},
+{id:"L2-16",l:2,d:2,g:["kein"],c:"Negación con kein-",s:"keine (plural)",x:"tecnología",t:"completar",k:"artículo negativo en plural",
+ q:"Responde negativamente. Completa con la forma correcta de kein-.",p:"Hast du Disketten? – Nein, ich habe {0} Disketten.",m:"b",a:[["keine"]],
+ h1:"En plural no hay artículo indeterminado (Nullartikel), pero sí existe la forma negativa.",
+ h2:"La forma negativa del plural termina en -e.",
+ e:"Plural: ø Disketten → keine Disketten."},
+{id:"L2-17",strict:1,l:2,d:1,g:["haben"],c:"Verbo haben",s:"haben: du hast",x:"tecnología",t:"completar",k:"conjugación de haben (du)",
+ q:"Completa con la forma correcta del verbo haben en presente.",p:"{0} du ein Smartphone?",m:"b",a:[["hast"]],
+ h1:"Haben es irregular con du y con er/sie/es: la raíz pierde una letra.",
+ h2:"Con du desaparece la b: ha- + terminación de du.",
+ e:"du hast, er hat (sin b)."},
+{id:"L2-18",strict:1,l:2,d:1,g:["haben"],c:"Verbo haben",s:"haben: ihr habt",x:"familia",t:"completar",k:"conjugación de haben (ihr)",
+ q:"Completa con la forma correcta del verbo haben en presente.",p:"{0} ihr Kinder?",m:"b",a:[["habt"]],
+ h1:"Con ihr, haben se comporta como un verbo regular.",
+ h2:"Raíz hab- + terminación de ihr.",
+ e:"ihr habt (regular). Irregulares solo: du hast, er hat."},
+{id:"L2-19",l:2,d:2,g:["praet"],c:"Pasado de haben",s:"haben: Präteritum",x:"objetos antiguos",t:"completar",k:"Präteritum de haben",
+ q:"Completa con la forma correcta del verbo haben.",p:"Früher {0} meine Eltern einen Plattenspieler.",m:"b",a:[["hatten"]],
+ h1:"El Präteritum de haben tiene una raíz distinta del presente. El sujeto es plural.",
+ h2:"Raíz hatt- + terminación de plural (-en).",
+ e:"meine Eltern = sie → hatten (ich hatte, du hattest, er hatte, wir/sie hatten)."},
+{id:"L2-20",lex:[0],l:2,d:1,g:["familie"],c:"Familia",s:"die Eltern",x:"familia",t:"completar",k:"vocabulario: familia",
+ q:"Completa con la palabra de familia adecuada.",p:"Mein Vater und meine Mutter sind meine {0}.",m:"b",a:[["Eltern"]],
+ h1:"Hay una palabra que agrupa a padre y madre.",
+ h2:"Empieza por El- y solo existe en plural.",
+ e:"die Eltern (solo plural)."},
+{id:"L2-21",lex:[0],l:2,d:2,g:["familie"],c:"Familia",s:"die Geschwister",x:"familia",t:"completar",k:"vocabulario: familia",
+ q:"Completa con la palabra de familia adecuada.",p:"Meine Schwester und mein Bruder sind meine {0}.",m:"b",a:[["Geschwister"]],
+ h1:"Hay una palabra que agrupa a hermanos y hermanas.",
+ h2:"Empieza por Ge- y contiene la palabra Schwester.",
+ e:"die Geschwister (plural)."},
+{id:"L2-22",lex:[0],l:2,d:1,g:["familie"],c:"Familia",s:"der Onkel",x:"familia",t:"completar",k:"vocabulario: familia",
+ q:"Completa con la palabra de familia adecuada.",p:"Mein Vater hat einen Bruder. Er ist mein {0}.",m:"b",a:[["Onkel"]],
+ h1:"Es el hermano de tu padre o de tu madre.",
+ h2:"Se parece a la palabra inglesa; empieza por On-.",
+ e:"der Onkel (die Tante)."},
+{id:"L2-23",lex:[0],l:2,d:1,g:["familie"],c:"Familia",s:"die Tante",x:"familia",t:"completar",k:"vocabulario: familia",
+ q:"Completa con la palabra de familia adecuada.",p:"Meine Mutter hat eine Schwester. Sie ist meine {0}.",m:"b",a:[["Tante"]],
+ h1:"Es la hermana de tu padre o de tu madre.",
+ h2:"Se parece a la palabra francesa; empieza por T- y termina en -e.",
+ e:"die Tante (der Onkel)."},
+{id:"L2-24",strict:1,l:2,d:1,g:["familie","plural"],c:"Familia",s:"die Kinder",x:"familia",t:"completar",k:"vocabulario + plural",
+ q:"Completa con la palabra de familia adecuada (en plural).",p:"Ich habe einen Sohn und eine Tochter. Das sind meine {0}.",m:"b",a:[["Kinder"]],
+ h1:"Hijos e hijas juntos.",
+ h2:"Singular: das Kind. El plural lleva -er.",
+ e:"das Kind → die Kinder."},
+{id:"L2-25",lex:[0, 1],l:2,d:2,g:["familie"],c:"Familia",s:"Relaciones de parentesco",x:"árbol familiar",t:"interpretación de estímulo visual",k:"vocabulario: parentesco",
+ q:"Mira el árbol familiar. Completa con la palabra de parentesco adecuada.",p:"Lukas ist der {0} von Mia. Anna ist die {1} von Lukas.",m:"b",a:[["Bruder"],["Mutter"]],v:{type:"family"},
+ h1:"Observa quién está al mismo nivel (hermanos) y quién está en la generación de arriba (padres).",
+ h2:"Lukas y Mia son hermanos. Anna es su madre.",
+ e:"Lukas y Mia son hermanos; Anna es la madre de ambos."},
+{id:"L2-26",l:2,d:2,g:["poss"],c:"Posesivos",s:"unsere (plural)",x:"familia",t:"completar",k:"posesivo de wir",
+ q:"Completa con el posesivo que corresponde al pronombre entre paréntesis.",p:"Das sind {0} Eltern. (wir)",m:"b",a:[["unsere"]],
+ h1:"Necesitas el posesivo de wir. Eltern es plural, así que lleva terminación.",
+ h2:"Raíz unser- + la terminación de plural -e.",
+ e:"wir → unser; plural: unsere Eltern."},
+{id:"L2-27",l:2,d:3,g:["poss"],c:"Posesivos",s:"euer (masc. nominativo)",x:"mascotas",t:"completar",k:"posesivo de ihr",
+ q:"Completa con el posesivo que corresponde al pronombre entre paréntesis.",p:"Ist das {0} Hund? (ihr)",m:"b",a:[["euer"]],
+ h1:"Necesitas el posesivo de ihr (vosotros). Hund es masculino nominativo: sin terminación.",
+ h2:"Empieza por eu- y tiene cuatro letras.",
+ e:"ihr → euer Hund (con terminación: eure Kinder)."},
+{id:"L2-28",l:2,d:1,g:["poss"],c:"Posesivos",s:"dein (masc. nominativo)",x:"familia",t:"completar",k:"posesivo de du",
+ q:"Completa con el posesivo que corresponde al pronombre entre paréntesis.",p:"Wie heißt {0} Bruder? (du)",m:"b",a:[["dein"]],
+ h1:"Necesitas el posesivo de du. Bruder es masculino nominativo: sin terminación.",
+ h2:"Se forma como mein, pero empieza por d-.",
+ e:"du → dein Bruder, deine Schwester."},
+{id:"L2-29",lex:[0],l:2,d:1,g:["tage"],c:"Días de la semana",s:"Wochentage",x:"calendario",t:"completar",k:"vocabulario: días",
+ q:"Escribe el día de la semana que va justo antes de Freitag.",p:"{0} → Freitag",m:"b",a:[["Donnerstag"]],
+ h1:"Es el cuarto día de la semana.",
+ h2:"Empieza por Donner-.",
+ e:"Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag, Sonntag."},
+{id:"L2-30",ord:1,l:2,d:2,g:["inv"],c:"Posición del sujeto",s:"Inversión: verbo en posición 2",x:"restaurante",t:"transformación",k:"orden: verbo en posición 2 con inversión del sujeto",
+ q:"Reescribe la oración empezando por «Am Donnerstag». Mantén todas las palabras.",p:"Das Brunnenstübel ist am Donnerstag geschlossen.",m:"s",a:["Am Donnerstag ist das Brunnenstübel geschlossen."],crit:[],
+ h1:"El sujeto puede ir en la posición 1 o justo después del verbo. El verbo no se mueve.",
+ h2:"«Am Donnerstag» ocupa la posición 1; ist va en la posición 2 y el sujeto (das Brunnenstübel) detrás.",
+ e:"Am Donnerstag (1) + ist (2) + das Brunnenstübel + geschlossen."},
+{id:"L2-31",strict:1,l:2,d:1,g:["moechte"],c:"möchte",s:"möcht-: wir möchten",x:"restaurante",t:"completar",k:"conjugación de möchte- (wir)",
+ q:"Completa con la forma correcta de möchte-.",p:"Wir {0} bitte zahlen.",m:"b",a:[["möchten"]],
+ h1:"Con wir, möchte- lleva la misma terminación que los verbos regulares.",
+ h2:"Raíz möcht- + -en.",
+ e:"ich möchte, du möchtest, er möchte, wir möchten."},
+{id:"L2-32",strict:1,l:2,d:1,g:["moechte"],c:"möchte",s:"möcht-: du möchtest",x:"restaurante",t:"completar",k:"conjugación de möchte- (du)",
+ q:"Completa con la forma correcta de möchte-.",p:"Was {0} du essen, Felix?",m:"b",a:[["möchtest"]],
+ h1:"Con du, möchte- lleva la terminación habitual de du.",
+ h2:"Raíz möcht- + -est.",
+ e:"du möchtest (ich möchte, er möchte)."},
+{id:"L2-33",l:2,d:2,g:[],c:"Pagar en el restaurante",s:"Pagar en el restaurante: zusammen / getrennt",x:"restaurante",t:"producción escrita",k:"función comunicativa: pagar",
+ q:"Eres camarero/a. Pregunta a los clientes si pagan juntos o por separado.",m:"s",a:["Zusammen oder getrennt?","Zahlen Sie zusammen oder getrennt?"],crit:["oder"],
+ h1:"La pregunta típica del camarero es muy corta: dos palabras unidas por un conector.",
+ h2:"Juntos = zusammen; por separado empieza por getr-.",
+ e:"Pregunta típica del camarero al cobrar: zusammen (juntos) o getrennt (por separado)."},
+{id:"L2-34",l:2,d:2,g:["moechte"],c:"Pagar en el restaurante",s:"Wir möchten (bitte) zahlen",x:"restaurante",t:"producción escrita",k:"función comunicativa: pedir la cuenta",
+ q:"En el restaurante, pide la cuenta en nombre de tu grupo. Usa wir y möchte-.",m:"s",
+ a:["Wir möchten bitte zahlen.","Wir möchten zahlen, bitte.","Wir möchten gerne zahlen.","Wir möchten gern zahlen.","Wir möchten bitte bezahlen.","Wir möchten bezahlen, bitte.","Wir möchten zahlen.","Wir möchten bezahlen.","Bitte, wir möchten zahlen."],crit:["möchten"],
+ h1:"Combina möchte- conjugado con el verbo que significa «pagar», en infinitivo al final.",
+ h2:"Wir + möchte- conjugado para wir + el verbo «pagar» en infinitivo al final. Puedes añadir bitte.",
+ e:"möchte- en posición 2 + infinitivo (zahlen) al final; bitte puede ir en varias posiciones."},
+{id:"L2-35",l:2,d:2,g:["akk"],c:"Pedir en el restaurante",s:"Neutro en acusativo: ein",x:"restaurante",t:"completar (2 huecos)",k:"artículo indeterminado en acusativo (neutro)",
+ q:"Pide en el restaurante. Completa con el artículo indeterminado en acusativo.",p:"Ich nehme {0} Wiener Schnitzel und {1} Mineralwasser.",m:"b",a:[["ein"],["ein"]],
+ h1:"Schnitzel y Mineralwasser son neutros. ¿Cambia el neutro en acusativo?",
+ h2:"El neutro no cambia en acusativo: es igual que en nominativo.",
+ e:"das Schnitzel → ein Schnitzel; das Mineralwasser → ein Mineralwasser."},
+{id:"L2-36",l:2,d:2,g:["artikel"],c:"Carta del restaurante",s:"das Dessert",x:"restaurante",t:"producción",k:"vocabulario + género",
+ q:"Escribe en alemán, con artículo determinado: «el postre».",m:"s",a:["das Dessert","die Nachspeise"],crit:["das","die"],
+ h1:"Es una palabra internacional, de origen francés, que aparece en la carta del restaurante.",
+ h2:"Empieza por Des- y es neutra.",
+ e:"Neutro; plural: die Desserts. También: die Nachspeise."},
+{id:"L2-37",l:2,d:2,g:["artikel"],c:"Aparatos",s:"Artículo determinado: der / das / die",x:"tecnología",t:"completar (3 huecos)",k:"género de sustantivos",
+ q:"Completa con el artículo determinado (der, das o die).",p:"{0} Smartphone · {1} Kamera · {2} Computer",m:"b",a:[["das"],["die"],["der"]],
+ h1:"Recupera cada aparato con su artículo, como en la lista de vocabulario de la Lektion 2.",
+ h2:"Hay exactamente uno de cada género: uno neutro, uno femenino y uno masculino.",
+ e:"das Smartphone, die Kamera, der Computer."},
+{id:"L2-38",lex:[0],l:2,d:2,g:["familie"],c:"Estado civil",s:"verheiratet / ledig / geschieden",x:"familias",t:"completar",k:"vocabulario: estado civil",
+ q:"Completa con el adjetivo adecuado: verheiratet, ledig o geschieden.",p:"Meine Eltern leben nicht mehr zusammen. Sie sind {0}.",m:"b",a:[["geschieden"]],
+ h1:"Antes estaban casados, pero ya no viven juntos.",
+ h2:"Es el participio que significa «divorciados»; empieza por ge-.",
+ e:"geschieden = divorciado/a; verheiratet = casado/a; ledig = soltero/a."},
+{id:"L2-39",l:2,d:1,g:["konn"],c:"Conectores",s:"oder (alternativa)",x:"bebidas",t:"completar",k:"conector de alternativa",
+ q:"Completa con el conector adecuado: und, aber u oder.",p:"Möchtest du ein Wasser {0} eine Cola?",m:"b",a:[["oder"]],
+ h1:"La pregunta ofrece elegir entre dos bebidas.",
+ h2:"Necesitas el conector de alternativa.",
+ e:"oder = alternativa (o una cosa o la otra)."},
+{id:"L2-40",l:2,d:2,g:["akk"],c:"Corrección: acusativo",s:"Artículo determinado masc. en acusativo: den",x:"restaurante",t:"corrección",k:"artículo determinado en acusativo",
+ q:"Corrige el error de artículo. Escribe la oración completa.",p:"Ich kenne der Kellner.",m:"s",a:["Ich kenne den Kellner."],crit:["den"],
+ h1:"Kellner es el complemento directo de kennen: está en acusativo.",
+ h2:"El artículo determinado masculino cambia en acusativo: la r se convierte en n.",
+ e:"der Kellner → Ich kenne den Kellner."},
+/* ============================ LEKTION 3 ============================ */
+{id:"L3-01",l:3,er:"E",pair:"p11",d:2,g:["pron-akk"],c:"Pronombres en acusativo",s:"er → ihn",x:"amigos",t:"completar",k:"pronombre personal en acusativo (masc.)",
+ q:"Completa con el pronombre personal adecuado.",p:"Kennst du Patrick? – Ja, ich kenne {0} gut.",m:"b",a:[["ihn"]],
+ h1:"Patrick es masculino (er) y aquí es el complemento directo.",
+ h2:"El acusativo de er no es er: empieza por i- y tiene tres letras.",
+ e:"er → ihn (sie → sie, es → es)."},
+{id:"L3-02",l:3,er:"R",pair:"p11",d:2,g:["pron-akk"],c:"Pronombres en acusativo",s:"er → ihn",x:"universidad",t:"completar",k:"pronombre personal en acusativo (masc.)",
+ q:"Completa con el pronombre personal adecuado.",p:"Siehst du den Professor heute? – Ja, ich sehe {0} um zehn Uhr.",m:"b",a:[["ihn"]],
+ h1:"Der Professor es masculino (er) y aquí es el complemento directo.",
+ h2:"El acusativo de er no es er: empieza por i- y tiene tres letras.",
+ e:"den Professor → ihn."},
+{id:"L3-03",clk:"inf",l:3,er:"E",pair:"p12",d:2,g:["viertel"],c:"La hora (coloquial)",s:"Viertel vor + hora siguiente",x:"hora",t:"interpretación de estímulo visual",k:"hora coloquial",
+ q:"Escribe la hora en lenguaje coloquial, como se dice en una conversación. Ejemplo: 13:20 → zwanzig nach eins.",m:"s",v:{type:"clock",h:9,m:45},
+ a:["Viertel vor zehn","Es ist Viertel vor zehn.","dreiviertel zehn","Es ist dreiviertel zehn."],crit:["vor","dreiviertel"],
+ h1:"Faltan 15 minutos para la hora siguiente. En coloquial se cuenta desde esa hora.",
+ h2:"15 minutos = Viertel. «Faltan … para» = vor + la hora siguiente.",
+ e:"9:45 → Viertel vor zehn."},
+{id:"L3-04",clk:"inf",l:3,er:"R",pair:"p12",d:2,g:["viertel"],c:"La hora (coloquial)",s:"Viertel vor + hora siguiente",x:"hora",t:"interpretación de estímulo visual",k:"hora coloquial",
+ q:"Escribe la hora en lenguaje coloquial, como se dice en una conversación. Ejemplo: 13:20 → zwanzig nach eins.",m:"s",v:{type:"clock",h:13,m:45},
+ a:["Viertel vor zwei","Es ist Viertel vor zwei.","dreiviertel zwei","Es ist dreiviertel zwei."],crit:["vor","dreiviertel"],
+ h1:"Faltan 15 minutos para la hora siguiente. En coloquial se cuenta desde esa hora y con el reloj de 12 horas.",
+ h2:"15 minutos = Viertel. «Faltan … para» se expresa con vor. ¿Cuál es la hora siguiente en formato de 12 horas?",
+ e:"13:45 → Viertel vor zwei."},
+{id:"L3-05",l:3,er:"E",pair:"p13",d:1,g:["am"],c:"Preposiciones temporales",s:"am + día de la semana",x:"universidad",t:"completar",k:"preposición temporal con días",
+ q:"Completa con la preposición temporal adecuada.",p:"Ich habe {0} Montag eine Vorlesung.",m:"b",a:[["am"]],
+ h1:"Con los días de la semana se usa siempre la misma preposición contraída.",
+ h2:"Es la contracción de an + dem: dos letras, empieza por a-.",
+ e:"am + día: am Montag, am Freitag (también am Wochenende, am Abend)."},
+{id:"L3-06",l:3,er:"R",pair:"p13",d:1,g:["am"],c:"Preposiciones temporales",s:"am + día de la semana",x:"trabajo",t:"completar",k:"preposición temporal con días",
+ q:"Completa con la preposición temporal adecuada.",p:"{0} Freitag jobbt Franziska im Supermarkt.",m:"b",a:[["am"]],
+ h1:"Con los días de la semana se usa siempre la misma preposición contraída.",
+ h2:"Es la contracción de an + dem: dos letras, empieza por a-.",
+ e:"Am Freitag … (am + día de la semana)."},
+{id:"L3-07",l:3,er:"E",pair:"p14",d:2,g:["praet-sein"],c:"Pasado de sein",s:"sein: Präteritum (waren)",x:"viajes",t:"completar",k:"Präteritum de sein",
+ q:"Completa con el verbo sein en Präteritum (pasado).",p:"Am Wochenende {0} wir auf Rügen.",m:"b",a:[["waren"]],
+ h1:"El Präteritum de sein tiene una raíz muy distinta del presente.",
+ h2:"Raíz war- + la terminación de wir.",
+ e:"ich war, du warst, er war, wir waren, ihr wart, sie waren."},
+{id:"L3-08",l:3,er:"R",pair:"p14",d:2,g:["praet-sein"],c:"Pasado de sein",s:"sein: Präteritum (waren)",x:"turismo",t:"completar",k:"Präteritum de sein",
+ q:"Completa con el verbo sein en Präteritum (pasado).",p:"Franziska und Clara {0} am Montag im Museum.",m:"b",a:[["waren"]],
+ h1:"El Präteritum de sein tiene una raíz muy distinta del presente. El sujeto es plural.",
+ h2:"Raíz war- + la terminación de plural.",
+ e:"Franziska und Clara = sie → waren."},
+{id:"L3-09",dg:[["\\bnicht\\b","Aquí no se niega la oración ni un adjetivo, sino un sustantivo. ¿Qué palabra niega sustantivos?"]],l:3,er:"E",pair:"p15",d:2,g:["kein"],c:"Negación: nicht / kein",s:"kein- ante sustantivo",x:"citas",t:"transformación",k:"negación del sustantivo con kein-",
+ q:"Niega la oración. Usa nicht o la forma adecuada de kein-, según corresponda.",p:"Ich habe heute Zeit.",m:"s",a:["Ich habe heute keine Zeit."],crit:["keine"],
+ h1:"Lo que niegas es un sustantivo sin artículo. ¿Qué palabra niega sustantivos?",
+ h2:"Se usa kein-. Zeit es femenino: la forma termina en -e.",
+ e:"kein- niega sustantivos; nicht niega la oración o un adjetivo. Zeit → keine Zeit."},
+{id:"L3-10",dg:[["\\bnicht\\b","Aquí no se niega la oración ni un adjetivo, sino un sustantivo. ¿Qué palabra niega sustantivos?"]],l:3,er:"R",pair:"p15",d:2,g:["kein"],c:"Negación: nicht / kein",s:"kein- ante sustantivo",x:"universidad",t:"transformación",k:"negación del sustantivo con kein-",
+ q:"Niega la oración. Usa nicht o la forma adecuada de kein-, según corresponda.",p:"Ich habe morgen eine Vorlesung.",m:"s",a:["Ich habe morgen keine Vorlesung."],crit:["keine"],
+ h1:"Lo que niegas es un sustantivo con artículo indeterminado. ¿Qué palabra niega sustantivos?",
+ h2:"Se usa kein-. Vorlesung es femenino: eine → la forma negativa correspondiente.",
+ e:"eine Vorlesung → keine Vorlesung."},
+{id:"L3-11",l:3,d:1,g:[],c:"Actividades universitarias",s:"eine Klausur schreiben",x:"universidad",t:"completar",k:"colocación verbo + sustantivo",
+ q:"Completa con el verbo adecuado en la forma correcta: schreiben, halten o besuchen.",p:"Morgen {0} ich eine Klausur.",m:"b",a:[["schreibe"]],
+ h1:"Piensa qué se hace con un examen (eine Klausur).",
+ h2:"Es el mismo verbo que se usa con un texto o un e-mail. Con ich termina en -e.",
+ e:"eine Klausur schreiben → ich schreibe."},
+{id:"L3-12",l:3,d:2,g:[],c:"Actividades universitarias",s:"ein Referat halten",x:"universidad",t:"completar",k:"colocación verbo + sustantivo",
+ q:"Completa con el verbo que significa «presentar oralmente», en la forma correcta: schreiben, halten o besuchen.",p:"Am Mittwoch {0} ich ein Referat.",m:"b",a:[["halte"]],
+ h1:"Una ponencia oral (ein Referat) no se escribe ni se visita: se presenta.",
+ h2:"El verbo es halten. Con ich: raíz halt- + -e.",
+ e:"ein Referat halten → ich halte."},
+{id:"L3-13",l:3,d:1,g:["tageszeit"],c:"Partes del día",s:"der Nachmittag",x:"tiempo",t:"producción",k:"vocabulario: partes del día",
+ q:"Escribe, con artículo determinado, la parte del día que corresponde a las 15:00.",m:"s",a:["der Nachmittag"],crit:["der"],
+ h1:"Es la parte del día que viene después del mediodía.",
+ h2:"Es una palabra compuesta: Nach- + der Mittag.",
+ e:"der Morgen, der Vormittag, der Mittag, der Nachmittag, der Abend, die Nacht."},
+{id:"L3-14",l:3,d:2,g:["am","tageszeit"],c:"Partes del día",s:"am + día + parte del día (compuesto)",x:"citas",t:"transformación",k:"compuesto día + parte del día",
+ q:"Une estas dos expresiones en una sola: am Freitag + am Abend.",m:"s",a:["am Freitagabend","Freitagabend"],crit:[],
+ h1:"Día y parte del día forman una sola palabra compuesta, con una sola preposición.",
+ h2:"am + Freitag + abend, todo junto en una palabra.",
+ e:"Día + parte del día forman una sola palabra con am (también: am Montagvormittag)."},
+{id:"L3-15",l:3,d:1,g:["um"],c:"Preposiciones temporales",s:"um + hora",x:"universidad",t:"completar",k:"preposición temporal con la hora",
+ q:"Completa con la preposición temporal adecuada.",p:"Die Vorlesung beginnt {0} zehn Uhr.",m:"b",a:[["um"]],
+ h1:"Con la hora exacta se usa una preposición distinta de la de los días.",
+ h2:"Es una palabra de dos letras que empieza por u-.",
+ e:"um + hora: um zehn Uhr, um Viertel nach zwei."},
+{id:"L3-16",l:3,d:1,g:["um"],c:"Preposiciones temporales",s:"von … bis …",x:"trabajo",t:"completar (2 huecos)",k:"preposiciones de intervalo",
+ q:"Completa con las preposiciones temporales que marcan el inicio y el final.",p:"Ich jobbe {0} 14 {1} 20 Uhr im Supermarkt.",m:"b",a:[["von"],["bis"]],
+ h1:"Necesitas dos preposiciones que marcan el inicio y el final de un intervalo.",
+ h2:"Inicio: empieza por v-. Final: empieza por b-.",
+ e:"von … bis …: von 14 bis 20 Uhr."},
+{id:"L3-17",l:3,d:2,g:["am","tageszeit"],c:"Preposiciones temporales",s:"in der Nacht (excepción)",x:"rutina",t:"completar (2 huecos)",k:"preposición + artículo con Nacht",
+ q:"Completa con la preposición y el artículo adecuados.",p:"{0} {1} Nacht schlafe ich.",m:"b",a:[["in"],["der"]],
+ h1:"Nacht es una excepción: no se usa am como con las demás partes del día.",
+ h2:"La preposición tiene dos letras (no es am). El artículo femenino cambia después de ella a una forma de tres letras.",
+ e:"in der Nacht (pero: am Morgen, am Abend)."},
+{id:"L3-18",l:3,d:2,g:["am","janein"],c:"Concertar citas",s:"Hast du am … Zeit?",x:"citas",t:"producción escrita",k:"función comunicativa: proponer cita",
+ q:"Pregunta a un compañero (informal) si tiene tiempo el sábado.",m:"s",a:["Hast du am Samstag Zeit?","Hast du Zeit am Samstag?","Hast du Samstag Zeit?","Hast du am Samstag Zeit für mich?"],crit:["hast"],
+ h1:"Es una pregunta de sí/no con haben + Zeit.",
+ h2:"Empieza por haben conjugado para du; el día va con la preposición que se usa con los días de la semana.",
+ e:"Pregunta de sí/no: el verbo va primero; los días van con am."},
+{id:"L3-19",l:3,d:1,g:[],c:"Concertar citas",s:"Fórmulas fijas de cortesía",x:"citas",t:"producción escrita",k:"fórmula de disculpa",
+ q:"Escribe la expresión para disculparte cuando no puedes aceptar una cita (equivale a «lo siento»).",m:"s",a:["Tut mir leid.","Es tut mir leid.","Tut mir leid!","Oh, tut mir leid."],crit:[],
+ h1:"Es una expresión fija con el verbo tun.",
+ h2:"Empieza por «Tut mir …».",
+ e:"(Es) tut mir leid."},
+{id:"L3-20",l:3,d:1,g:[],c:"Expresiones",s:"Fórmulas fijas de cortesía",x:"salud",t:"producción escrita",k:"fórmula de buenos deseos",
+ q:"Tu amiga Nina está enferma. Escribe lo que le deseas en alemán (fórmula fija).",m:"s",a:["Gute Besserung!","Gute Besserung, Nina!"],crit:[],
+ h1:"Es una fórmula de dos palabras que expresa el deseo de que se mejore.",
+ h2:"Gute + un sustantivo derivado de besser (mejor).",
+ e:"Fórmula fija para desear que alguien se recupere."},
+{id:"L3-21",l:3,d:1,g:["menge"],c:"Envases",s:"ein Glas Marmelade",x:"supermercado",t:"completar",k:"vocabulario: envases",
+ q:"Completa con el envase adecuado: Flasche, Packung, Glas o Becher.",p:"Ich kaufe ein {0} Marmelade.",m:"b",a:[["Glas"]],
+ h1:"La mermelada se vende en un envase de vidrio.",
+ h2:"El envase es neutro (ein …) y se llama igual que el material.",
+ e:"ein Glas Marmelade (eine Flasche Wasser, eine Packung Müsli, ein Becher Joghurt)."},
+{id:"L3-22",l:3,d:2,g:["menge"],c:"Preguntar por cantidades",s:"Wie viel / Wie viele",x:"carnicería",t:"completar (2 huecos)",k:"contable / no contable",
+ q:"Completa con viel o viele.",p:"Wie {0} Bratwürstchen möchten Sie? – Wie {1} Hackfleisch möchten Sie?",m:"b",a:[["viele"],["viel"]],
+ h1:"Una pregunta se refiere a algo que se puede contar; la otra, a una cantidad que no se cuenta.",
+ h2:"Para cosas contables (en plural) se usa la forma con -e.",
+ e:"Wie viele Würstchen? (se cuentan) · Wie viel Hackfleisch? (se pesa)."},
+{id:"L3-23",l:3,d:1,g:["laden"],c:"Conversación de compra",s:"Fórmulas del dependiente",x:"tienda",t:"producción escrita",k:"función comunicativa: atender al cliente",
+ q:"Eres dependiente en la charcutería. Pregunta al cliente qué desea (fórmula típica de la tienda).",m:"s",a:["Was darf es sein?","Was hätten Sie gern?","Was hätten Sie gerne?","Guten Tag, was darf es sein?","Guten Tag! Was darf es sein?"],crit:[],
+ h1:"Hay una fórmula fija con el verbo dürfen y el verbo sein.",
+ h2:"La fórmula tiene cuatro palabras: palabra interrogativa + dürfen conjugado + es + sein.",
+ e:"Fórmulas típicas del dependiente: Was darf es sein? / Was hätten Sie gern?"},
+{id:"L3-24",rv:["hatte","gramms","gramme","kilos"],dg:[["\\b(den|einen|der|die|das) gouda","Con una cantidad no se usa artículo: 200 Gramm Gouda.","Con una cantidad (200 Gramm) el producto va sin artículo."],["gramms|gramme","La unidad Gramm no lleva plural.","Gramm no lleva plural: 200 Gramm."],["^(?!ich haette gern)","Usa la fórmula pedida: Ich hätte gern …"]],l:3,d:2,g:["laden","menge"],c:"Conversación de compra",s:"Ich hätte gern + cantidad + producto",x:"tienda",t:"producción escrita",k:"función comunicativa: pedir una cantidad",
+ q:"Eres cliente. Pide 200 gramos de Gouda con la fórmula «hätte gern».",m:"s",
+ a:["Ich hätte gern 200 Gramm Gouda.","Ich hätte gerne 200 Gramm Gouda.","Ich hätte gern zweihundert Gramm Gouda.","Ich hätte gerne zweihundert Gramm Gouda.","Ich hätte gern 200 g Gouda.","Ich hätte gerne 200 g Gouda.","Ich hätte gern 200 Gramm Gouda, bitte.","Ich hätte gerne 200 Gramm Gouda, bitte."],crit:["hätte","gramm"],
+ h1:"Con las cantidades no se usa artículo: cantidad + unidad + producto.",
+ h2:"Orden: Ich hätte gern + cantidad + unidad (Gramm, sin -s) + producto.",
+ e:"Ich hätte gern + cantidad + unidad + producto, sin artículo."},
+{id:"L3-25",l:3,d:1,g:["laden"],c:"Conversación de compra",s:"Fórmulas del cliente: cerrar la compra",x:"tienda",t:"producción escrita",k:"función comunicativa: cerrar la compra",
+ q:"La dependienta pregunta «Darf es sonst noch etwas sein?». Responde que no, que eso es todo, y da las gracias.",m:"s",
+ a:["Nein, danke. Das ist alles.","Nein, vielen Dank. Das ist alles.","Das ist alles, danke.","Nein, das ist alles. Danke.","Danke, das ist alles.","Nein, das ist alles, danke.","Nein, danke, das ist dann alles.","Das ist dann alles, danke.","Nein, danke. Das ist dann alles.","Nein, das ist alles. Vielen Dank."],crit:["alles"],
+ h1:"La respuesta tiene tres elementos: negar, decir «eso es todo» y agradecer.",
+ h2:"«Eso es todo» = Das ist … (una palabra que significa «todo»).",
+ e:"Fórmula para cerrar la compra: Das ist alles (eso es todo)."},
+{id:"L3-26",lex:[1],l:3,d:1,g:["lebensmittel"],c:"Alimentos",s:"Vocabulario con artículo",x:"supermercado",t:"interpretación de estímulo visual",k:"vocabulario + género",
+ q:"¿Cómo se dice en alemán? Escribe el artículo determinado y el sustantivo.",p:"{0} {1}",m:"b",a:[["die"],["Banane"]],v:{type:"banana"},
+ h1:"Es una fruta; la palabra se parece mucho a la española.",
+ h2:"Es femenina y termina en -e.",
+ e:"Femenino; plural: die Bananen."},
+{id:"L3-27",l:3,d:1,g:["wetter"],c:"El tiempo",s:"es + verbo impersonal",x:"meteorología",t:"interpretación de estímulo visual",k:"expresión del tiempo atmosférico",
+ q:"Describe con una oración el tiempo que muestra la imagen.",m:"s",v:{type:"weather",w:"rain"},a:["Es regnet."],crit:["regnet"],
+ h1:"Para este fenómeno se usa un verbo impersonal con el sujeto es.",
+ h2:"Es + el verbo regnen en 3.ª persona del singular.",
+ e:"Fenómenos meteorológicos con es + verbo: es regnet, es schneit."},
+{id:"L3-28",l:3,d:1,g:["wetter"],c:"El tiempo",s:"es + verbo impersonal",x:"meteorología",t:"interpretación de estímulo visual",k:"expresión del tiempo atmosférico",
+ q:"Describe con una oración el tiempo que muestra la imagen.",m:"s",v:{type:"weather",w:"snow"},a:["Es schneit."],crit:["schneit"],
+ h1:"Para este fenómeno se usa un verbo impersonal con el sujeto es.",
+ h2:"Es + el verbo schneien en 3.ª persona del singular.",
+ e:"Fenómenos meteorológicos con es + verbo: es schneit, es regnet."},
+{id:"L3-29",l:3,d:2,g:["wetter"],c:"El tiempo",s:"es ist + adjetivo (tiempo)",x:"meteorología",t:"interpretación de estímulo visual",k:"expresión del tiempo atmosférico",
+ q:"Describe con una oración el tiempo que muestra la imagen.",m:"s",v:{type:"weather",w:"wind"},a:["Es ist windig."],crit:["windig"],
+ h1:"Aquí se usa es ist + un adjetivo derivado de un sustantivo (der Wind).",
+ h2:"Wind + -ig.",
+ e:"es ist + adjetivo en -ig (Wind → windig; también sonnig)."},
+{id:"L3-30",l:3,d:1,g:["wetter"],c:"El tiempo",s:"Die Sonne scheint / Es ist sonnig",x:"meteorología",t:"interpretación de estímulo visual",k:"expresión del tiempo atmosférico",
+ q:"Describe con una oración el tiempo que muestra la imagen.",m:"s",v:{type:"weather",w:"sun"},a:["Die Sonne scheint.","Es ist sonnig.","Heute scheint die Sonne."],crit:["scheint","sonnig"],
+ h1:"Puedes usar el sustantivo Sonne con un verbo, o es ist + un adjetivo.",
+ h2:"Die Sonne + scheinen (3.ª persona), o Es ist + Sonne + -ig.",
+ e:"Dos opciones: die Sonne + scheinen, o es ist + sonnig."},
+{id:"L3-31",dg:[["\\bist\\b","Con varios grados el verbo no va en singular."]],l:3,d:2,g:["wetter"],c:"El tiempo",s:"Es sind … Grad",x:"meteorología",t:"interpretación de estímulo visual",k:"expresión de la temperatura",
+ q:"Escribe la temperatura con una oración completa.",m:"s",v:{type:"thermo",t:22},a:["Es sind 22 Grad.","Es sind zweiundzwanzig Grad."],crit:["sind"],
+ h1:"Con la temperatura (varios grados) el verbo no va en singular.",
+ h2:"Es + el verbo sein en plural + número + Grad.",
+ e:"Con varios grados el verbo va en plural: es sind (no es ist)."},
+{id:"L3-32",rx:["^(ich finde sie|sie finde ich)( (sehr|ganz|wirklich|total|echt|so))? (schoen|toll|super|interessant|gut|sympathisch|nett)$"],dg:[["^wie ","Has reformulado la pregunta. Respóndela en primera persona: Ich finde …"],["die insel|ruegen","La respuesta es correcta, pero aquí se pide sustituir «die Insel Rügen» por un pronombre."],["(finde|finden) (ihn|es|ihr|ihm)\\b","Revisa el pronombre: Insel es femenino (die Insel)."]],l:3,d:2,g:["pron-akk"],c:"Opinar con finden",s:"finden + pronombre en acusativo",x:"turismo",t:"producción escrita",k:"pronombre personal en acusativo (fem.)",
+ q:"Responde que la isla te parece muy bonita. Usa el verbo finden y sustituye «die Insel Rügen» por un pronombre.",p:"Wie findest du die Insel Rügen?",m:"s",a:["Ich finde sie sehr schön."],crit:["sie","finde"],
+ h1:"Tienes que responder a la pregunta dando tu opinión (no repetirla) y sustituir «die Insel Rügen» por un pronombre.",
+ h2:"Empieza por Ich finde … Insel es femenino: su pronombre en acusativo es igual que en nominativo.",
+ e:"El pronombre sustituye a die Insel; en acusativo: er → ihn, sie → sie, es → es."},
+{id:"L3-33",l:3,d:3,g:["pron-akk"],c:"Pronombres en acusativo",s:"Pronombres de 1.ª/2.ª persona en acusativo",x:"visitas",t:"completar",k:"pronombre personal en acusativo (2.ª pl.)",
+ q:"Completa con el pronombre personal adecuado en acusativo.",p:"Besucht ihr uns am Sonntag? – Ja, wir besuchen {0} gern.",m:"b",a:[["euch"]],
+ h1:"La respuesta se dirige a las personas que preguntan. Desde el otro lado, uns se convierte en…",
+ h2:"Es el acusativo de ihr; empieza por eu-.",
+ e:"wir → uns; ihr → euch."},
+{id:"L3-34",l:3,d:2,g:["praet","praet-sein","kein"],c:"Pasado de haben",s:"haben: Präteritum (hatten)",x:"viajes",t:"completar",k:"Präteritum de haben",
+ q:"Completa con la forma correcta del verbo haben.",p:"Es war kalt, und wir {0} keinen Pullover dabei.",m:"b",a:[["hatten"]],
+ h1:"El Präteritum de haben tiene una raíz distinta del presente.",
+ h2:"Raíz hatt- + la terminación de wir.",
+ e:"wir hatten (ich hatte, du hattest)."},
+{id:"L3-35",l:3,d:2,g:["praet-sein","am"],c:"Pasado de sein",s:"sein: Präteritum (warst)",x:"fin de semana",t:"completar",k:"Präteritum de sein (du)",
+ q:"Completa con el verbo sein en Präteritum (pasado).",p:"Wo {0} du am Wochenende?",m:"b",a:[["warst"]],
+ h1:"Usa la raíz del Präteritum de sein con la terminación de du.",
+ h2:"Raíz war- + -st.",
+ e:"du warst (ich war, er war)."},
+{id:"L3-36",ord:1,l:3,d:2,g:["inv"],c:"Posición del sujeto",s:"Inversión: verbo en posición 2",x:"meteorología",t:"transformación",k:"orden: verbo en posición 2 con inversión del sujeto",
+ q:"Reescribe la oración empezando por «Heute». Mantén todas las palabras.",p:"Die Sonne scheint heute nicht.",m:"s",a:["Heute scheint die Sonne nicht."],crit:[],
+ h1:"El sujeto puede ir en la posición 1 o justo después del verbo. El verbo no se mueve.",
+ h2:"«Heute» ocupa la posición 1; scheint va en la posición 2 y el sujeto (die Sonne) detrás.",
+ e:"Heute (1) + scheint (2) + die Sonne + nicht."},
+{id:"L3-37",ord:1,l:3,d:2,g:["inv","am"],c:"Corrección: orden",s:"Inversión: verbo en posición 2",x:"familia",t:"corrección",k:"orden: verbo en posición 2 con inversión del sujeto",
+ q:"Corrige únicamente el orden de las palabras.",p:"Am Sonntag ich besuche meine Oma.",m:"s",a:["Am Sonntag besuche ich meine Oma."],crit:[],
+ h1:"La oración empieza por una expresión de tiempo. ¿Dónde tiene que ir el verbo?",
+ h2:"El verbo (besuche) va en la posición 2 y el sujeto (ich) detrás.",
+ e:"Am Sonntag (1) + besuche (2) + ich + meine Oma."},
+{id:"L3-38",clk:"off",l:3,d:2,g:["uhr-off"],c:"La hora (oficial)",s:"Hora oficial: … Uhr …",x:"hora",t:"interpretación de estímulo visual",k:"hora oficial",
+ q:"Escribe con palabras la hora oficial, la de los horarios y la radio. Ejemplo: 14:10 → vierzehn Uhr zehn.",m:"s",v:{type:"clock",h:20,m:15},
+ a:["zwanzig Uhr fünfzehn","Es ist zwanzig Uhr fünfzehn."],crit:["uhr"],
+ h1:"La hora oficial usa el formato de 24 horas: primero la hora, luego Uhr y después los minutos.",
+ h2:"zwanzig + Uhr + los minutos en letras.",
+ e:"20:15 → zwanzig Uhr fünfzehn (coloquial: Viertel nach acht)."},
+{id:"L3-39",clk:"inf",l:3,d:2,g:["halb"],c:"La hora (coloquial)",s:"halb + hora siguiente",x:"hora",t:"interpretación de estímulo visual",k:"hora coloquial",
+ q:"Escribe la hora en lenguaje coloquial, como se dice en una conversación. Ejemplo: 13:20 → zwanzig nach eins.",m:"s",v:{type:"clock",h:13,m:30},
+ a:["halb zwei","Es ist halb zwei."],crit:["zwei"],
+ h1:"En alemán la media hora se dice en relación con la hora siguiente, no con la anterior.",
+ h2:"Se usa halb + la hora que viene después de las 13:00, contada en formato de 12 horas.",
+ e:"13:30 → halb zwei."},
+{id:"L3-40",clk:"inf",l:3,d:3,g:["halb"],c:"La hora (coloquial)",s:"fünf vor halb + hora siguiente",x:"hora",t:"interpretación de estímulo visual",k:"hora coloquial",
+ q:"Escribe la hora en lenguaje coloquial, como se dice en una conversación. Ejemplo: 13:20 → zwanzig nach eins.",m:"s",v:{type:"clock",h:12,m:25},
+ a:["fünf vor halb eins","Es ist fünf vor halb eins."],crit:["vor","halb","eins"],
+ h1:"Faltan cinco minutos para la media hora. La media hora se dice con la hora siguiente.",
+ h2:"Se cuenta desde la media hora: fünf vor halb + la hora que viene después de las 12:00 (formato de 12 horas).",
+ e:"12:25 → fünf vor halb eins."}
+];
+if (typeof module !== "undefined") module.exports = ITEMS;
+
+/* NeuroTutor · variantes de recuperación adaptativa (A).
+   Una por cada ítem que no pertenece a un par E→R. Se programan solo si el estudiante falla
+   la primera respuesta del ítem base, 8–15 actividades después. Heredan del ítem base:
+   c, s, x, t, k, l, g, m, q, h1, h2, e, lex, strict, ord, clk. No heredan: p, a, crit, tiles, v, rx, dg, rv. */
+if (typeof module !== "undefined" && typeof ITEMS === "undefined") { var ITEMS = require("./items.js"); }
+var VARIANTS = {
+/* ---------- Lektion 1 ---------- */
+"L1-11":{p:"Hallo, ich bin Leyla. Und wie {0} du?",a:[["heißt"]],e:"du heißt: con raíz en -ß solo se añade -t."},
+"L1-12":{q:"Completa con la forma correcta del verbo lernen.",p:"Leonie und ich {0} Chinesisch.",a:[["lernen"]],
+  h1:"Fíjate en el sujeto: «Leonie und ich» equivale a un pronombre en plural.",h2:"«Leonie und ich» = wir. Con wir la forma coincide con el infinitivo.",e:"Leonie und ich = wir → wir lernen."},
+"L1-13":{p:"Sie kommen aus Kolumbien.",a:["Kommen Sie aus Kolumbien?"],e:"Ja/Nein-Frage: verbo conjugado en posición 1 + sujeto: Kommen Sie …?"},
+"L1-14":{tiles:["arbeitest","jetzt","du","wo"],a:["Wo arbeitest du jetzt?"],e:"W-Frage: Wo (pos. 1) + arbeitest (pos. 2) + du + jetzt."},
+"L1-15":{q:"Pregunta al señor Amri de dónde viene. Usa la forma formal (Sie).",a:["Woher kommen Sie?","Herr Amri, woher kommen Sie?","Woher kommen Sie, Herr Amri?"],crit:["kommen","sie"],
+  dg:[["kommst|\\bdu\\b","Has usado la forma informal. Con el señor Amri se usa Sie."]],
+  h1:"Necesitas la palabra interrogativa de origen, el verbo kommen y el pronombre formal.",h2:"Con Sie, el verbo tiene la misma forma que el infinitivo; el pronombre va detrás del verbo.",e:"Formal: Woher kommen Sie? · Informal: Woher kommst du?"},
+"L1-16":{q:"Pregunta a un compañero del curso dónde vive. Usa la forma informal (du).",a:["Wo wohnst du?","Wo wohnst du jetzt?"],crit:["wohnst","du"],
+  dg:[["wohnen sie|\\bsie\\b","Has usado la forma formal. Con un compañero se usa du."]],
+  h1:"Necesitas la palabra interrogativa de lugar, el verbo wohnen conjugado para du y el pronombre.",h2:"Con du, wohnen termina en -st.",e:"Con du: wohnst. Formal: Wo wohnen Sie?"},
+"L1-17":{q:"Tu profesora te pregunta «Wie geht es Ihnen?». Responde que estás bien, da las gracias y devuélvele la pregunta de forma formal.",
+  a:(function () { var st = ["gut","sehr gut","mir geht es gut","mir geht es sehr gut","mir geht's gut","es geht mir gut"], back = ["Und Ihnen?","Und wie geht es Ihnen?","Und wie geht's Ihnen?"], out = [];
+    var cap = function (x) { return x.charAt(0).toUpperCase() + x.slice(1); };
+    out.push("Gut, danke. Und Ihnen?");
+    st.forEach(function (e) { back.forEach(function (b) { out.push(cap(e) + ", danke. " + b); out.push("Danke, " + e + ". " + b); out.push(cap(e) + ", vielen Dank. " + b); }); });
+    return out.filter(function (x, k) { return out.indexOf(x) === k; }); })(),crit:["ihnen"],
+  dg:[["\\bdir\\b","Has devuelto la pregunta de forma informal (dir). A la profesora se le habla de Sie."]],
+  h1:"La respuesta tiene tres partes: cómo estás, el agradecimiento y la pregunta devuelta en forma formal.",h2:"Bien = gut; gracias = danke. Para devolver la pregunta en formal: «Und …?» con el pronombre de Sie (empieza por I-).",e:"Formal: Und Ihnen? · Informal: Und dir?"},
+"L1-18":{p:"Yuki kommt aus Japan. Sie spricht {0}.",a:[["Japanisch"]],h2:"La terminación es -isch. Japan → Japan- …",e:"Las lenguas terminan casi siempre en -isch: Japanisch."},
+"L1-19":{p:"Ana kommt aus Spanien. Sie ist {0}.",a:[["Spanierin"]],h1:"La forma femenina se construye a partir de la masculina añadiendo una terminación.",h2:"Masculino: der Spanier. Para el femenino se añade -in.",e:"der Spanier → die Spanierin."},
+"L1-20":{p:"Lukas kommt aus Polen. Er ist {0}.",a:[["Pole"]],h1:"Algunas nacionalidades masculinas son muy cortas y terminan en -e.",h2:"Polen → Pol- + -e.",e:"der Pole / die Polin."},
+"L1-21":{q:"Completa con el nombre en alemán de la carrera indicada: Informática.",p:"Rodrigo studiert {0}.",a:[["Informatik"]],h1:"Es una palabra internacional muy parecida a la española; termina en -ik.",h2:"Empieza por Inform-.",e:"Informatik (también: Mathematik, Physik)."},
+"L1-22":{p:"16 → {0}",a:[["sechzehn"]],h2:"En 16, sechs pierde la -s final.",e:"sechzehn (no sechszehn). También: siebzehn."},
+"L1-23":{p:"33 → {0}",a:[["dreiunddreißig"]],h1:"Primero la unidad, luego und y después la decena; la decena 30 es una excepción.",h2:"La decena termina en -ßig. Todo en una palabra.",e:"drei + und + dreißig."},
+"L1-24":{p:"67 → {0}",a:[["siebenundsechzig"]],h2:"Unidad: sieben (completa). Decena: 60, que pierde la -s de sechs.",e:"sieben + und + sechzig."},
+"L1-25":{q:"Responde con una oración completa. Tienes 19 años.",p:"Und wie alt bist du?",a:["Ich bin 19 Jahre alt.","Ich bin neunzehn Jahre alt.","Ich bin 19.","Ich bin neunzehn."],crit:["bin"],
+  dg:[["\\bhabe\\b","En alemán la edad se expresa con sein, no con haben."]],e:"La edad se expresa con sein: Ich bin … Jahre alt."},
+"L1-26":{p:"{0} Projektor · {1} Gruppe · {2} Bild",a:[["der"],["die"],["das"]],e:"der Projektor, die Gruppe, das Bild."},
+"L1-27":{p:"das Glas → die {0}",a:[["Gläser"]],h2:"La a lleva Umlaut y la terminación es -er.",e:"Plural con Umlaut + -er."},
+"L1-28":{p:"die Wurst → die {0}",a:[["Würste"]],h2:"La u pasa a ü y se añade -e.",e:"Plural con Umlaut + -e."},
+"L1-29":{p:"die Studentin → die {0}",a:[["Studentinnen"]],e:"-in → -innen: die Studentin → die Studentinnen."},
+"L1-30":{p:"{0} {1}",a:[["der"],["Ball"]],v:{type:"ball"},h1:"Es un objeto redondo que aparece entre los objetos del aula de la Lektion 1.",h2:"La palabra empieza por B- y es masculina.",e:"Masculino; plural: die Bälle."},
+"L1-31":{p:"{0} kommst du? – Aus Kolumbien.",a:[["woher"]],h1:"La respuesta indica el origen de alguien.",h2:"Wo pregunta por el lugar y wie por el modo o el nombre. Necesitas la que pregunta por el origen.",e:"Woher? → origen (Aus …). Wo? → lugar (In …)."},
+"L1-32":{p:"Was lernst du? (Deutsch)",a:["Ich lerne Deutsch."],crit:["lerne"],
+  dg:[["lernst","Has copiado la forma de du. Conjuga lernen para ich."]],h2:"Raíz lern- + terminación de ich (-e), y después la lengua.",e:"du lernst → ich lerne."},
+"L1-33":{p:"Ich bin Lehrerin. Ich arbeite {0}.",a:[["schon"]],h1:"Una profesora, ¿trabaja ya?",h2:"Necesitas la palabra que significa «ya».",e:"schon = ya; noch nicht = todavía no."},
+"L1-34":{p:"Wir kommen {0} Kolumbien, aber wir wohnen jetzt {1} Berlin.",a:[["aus"],["in"]],e:"kommen aus (origen) · wohnen in (lugar)."},
+"L1-35":{q:"Pregunta al señor Amri por su número de teléfono. Usa la forma formal y la palabra Telefonnummer.",
+  a:["Wie ist Ihre Telefonnummer?","Herr Amri, wie ist Ihre Telefonnummer?","Wie ist Ihre Telefonnummer, Herr Amri?"],crit:["ihre"],
+  h2:"El posesivo de Sie empieza por I- (con mayúscula). Telefonnummer es femenino, así que lleva -e.",e:"Con Sie: Ihre Telefonnummer; con du: deine Telefonnummer."},
+"L1-36":{q:"Pregunta a una compañera por su correo electrónico. Usa la forma informal y la palabra E-Mail-Adresse.",
+  a:["Wie ist deine E-Mail-Adresse?","Wie ist deine E-Mail Adresse?","Wie ist deine Email-Adresse?","Wie ist deine Emailadresse?","Wie ist deine Mailadresse?"],crit:["deine"],
+  h1:"Es la misma estructura que para preguntar la dirección: «Wie ist …» + posesivo + E-Mail-Adresse.",h2:"Usa el posesivo de du. Adresse es femenino, así que el posesivo termina en -e.",e:"Con du: deine E-Mail-Adresse; con Sie: Ihre E-Mail-Adresse."},
+"L1-37":{p:"Ihr kommst aus Brasilien.",a:["Ihr kommt aus Brasilien."],crit:["kommt"],h2:"El sujeto es ihr: raíz del verbo + -t.",e:"ihr kommt (du kommst)."},
+"L1-38":{p:"Wo du wohnst?",a:["Wo wohnst du?"],e:"Wo (1) + wohnst (2) + du."},
+"L1-39":{q:"Escribe en alemán la instrucción del libro, en forma Sie: «Lea».",a:["Lesen Sie.","Lesen Sie bitte."],crit:["lesen","sie"],
+  h2:"Usa el verbo que significa «leer», en infinitivo, delante de Sie.",e:"Instrucción formal: verbo en infinitivo + Sie (Hören Sie, Schreiben Sie…)."},
+"L1-40":{q:"Completa: en el primer hueco, la palabra para «nombre de pila»; en el segundo, la palabra para «apellido».",p:"Mein {0} ist Tarik, mein {1} ist Amri.",a:[["Vorname"],["Familienname","Nachname"]],
+  h2:"Nombre de pila: Vor- + name. Apellido: Familien- o Nach- + name.",e:"der Vorname · der Familienname / der Nachname."},
+/* ---------- Lektion 2 ---------- */
+"L2-11":{p:"Felix {0} das Wiener Schnitzel.",a:[["nimmt"]],h2:"La e pasa a i, la h desaparece y la m se duplica: nimm- + terminación de er.",e:"er nimmt (du nimmst)."},
+"L2-12":{p:"Was {0} ihr am Sonntag?",a:[["esst"]],e:"ihr esst (sin cambio vocálico). Pero: du isst, er isst."},
+"L2-13":{p:"Das ist {0} Plattenspieler. {1} Plattenspieler funktioniert noch.",a:[["ein"],["der"]],
+  h1:"Plattenspieler es masculino. La primera mención presenta algo nuevo; la segunda se refiere a algo ya mencionado.",h2:"Primer hueco: artículo indeterminado masculino. Segundo hueco: artículo determinado masculino.",e:"Información nueva → ein Plattenspieler; información conocida → der Plattenspieler."},
+"L2-14":{p:"Ich kenne {0} Professor gut.",a:[["den"]],h1:"Professor es masculino y aquí es el complemento directo.",e:"der Professor → Ich kenne den Professor."},
+"L2-15":{p:"Ich möchte {0} Cola, bitte.",a:[["eine"]],h1:"Cola es femenino. ¿Cambia el artículo femenino cuando es complemento directo?",e:"die Cola → eine Cola (nominativo y acusativo iguales)."},
+"L2-16":{p:"Hast du Kinder? – Nein, ich habe {0} Kinder.",a:[["keine"]],e:"Plural: ø Kinder → keine Kinder."},
+"L2-17":{p:"{0} du einen Hund?",a:[["hast"]],e:"du hast, er hat (sin b)."},
+"L2-18":{p:"{0} ihr ein Auto?",a:[["habt"]],e:"ihr habt (regular)."},
+"L2-19":{p:"Als Kind {0} ich keinen Computer.",a:[["hatte"]],h1:"El Präteritum de haben tiene una raíz distinta del presente. El sujeto es ich.",h2:"Raíz hatt- + la terminación de ich.",e:"ich hatte, du hattest, er hatte."},
+"L2-20":{p:"Mein Großvater und meine Großmutter sind meine {0}.",a:[["Großeltern"]],h1:"Hay una palabra que agrupa a abuelo y abuela.",h2:"Es compuesta: Groß- + la palabra que agrupa a padre y madre.",e:"die Großeltern (solo plural)."},
+"L2-21":{p:"Lukas und Mia sind Bruder und Schwester. Sie sind {0}.",a:[["Geschwister"]],e:"die Geschwister = hermanos y hermanas."},
+"L2-22":{p:"Meine Schwester hat einen Sohn. Er ist mein {0}.",a:[["Neffe"]],h1:"Es el hijo de tu hermano o de tu hermana.",h2:"Empieza por Ne- y termina en -e.",e:"der Neffe (die Nichte)."},
+"L2-23":{p:"Meine Schwester hat eine Tochter. Sie ist meine {0}.",a:[["Nichte"]],h1:"Es la hija de tu hermano o de tu hermana.",h2:"Empieza por Ni- y termina en -e.",e:"die Nichte (der Neffe)."},
+"L2-24":{p:"Mein Sohn hat zwei Kinder, Paul und Lena. Sie sind meine {0}.",a:[["Enkel","Enkelkinder"]],h1:"Son los hijos de tu hijo.",h2:"Empieza por Enk-; el plural es igual que el singular.",e:"der Enkel → die Enkel (también: die Enkelkinder)."},
+"L2-25":{p:"Mia ist die {0} von Lukas. Peter ist der {1} von Mia.",a:[["Schwester"],["Vater"]],v:{type:"family"},h2:"Mia y Lukas son hermanos. Peter es su padre.",e:"Mia y Lukas son hermanos; Peter es el padre de ambos."},
+"L2-26":{p:"Wo sind {0} Bücher? (wir)",a:[["unsere"]],e:"wir → unser; plural: unsere Bücher."},
+"L2-27":{p:"Wie heißt {0} Lehrer? (ihr)",a:[["euer"]],e:"ihr → euer Lehrer (con terminación: eure Lehrerin)."},
+"L2-28":{p:"Ist das {0} Handy? (du)",a:[["dein"]],h1:"Necesitas el posesivo de du. Handy es neutro nominativo: sin terminación.",e:"du → dein Handy, deine Kamera."},
+"L2-29":{q:"Escribe el día de la semana que va justo después de Dienstag.",p:"Dienstag → {0}",a:[["Mittwoch"]],h1:"Es el día de la mitad de la semana.",h2:"Empieza por Mitt-.",e:"Montag, Dienstag, Mittwoch, Donnerstag…"},
+"L2-30":{q:"Reescribe la oración empezando por «Am Montag». Mantén todas las palabras.",p:"Das Topkapı ist am Montag geschlossen.",a:["Am Montag ist das Topkapı geschlossen."],
+  h2:"«Am Montag» ocupa la posición 1; ist va en la posición 2 y el sujeto (das Topkapı) detrás.",e:"Am Montag (1) + ist (2) + das Topkapı + geschlossen."},
+"L2-31":{p:"Jan und Felix {0} ein Bier.",a:[["möchten"]],h1:"El sujeto equivale a sie (plural): la terminación es la de los verbos regulares.",e:"Jan und Felix = sie → möchten."},
+"L2-32":{p:"{0} du eine Cola?",a:[["möchtest"]],e:"du möchtest."},
+"L2-33":{q:"Eres cliente. El camarero pregunta «Zusammen oder getrennt?». Responde que pagáis por separado.",a:["Getrennt, bitte.","Getrennt.","Wir zahlen getrennt.","Getrennt bitte."],crit:["getrennt"],
+  h1:"La respuesta es muy corta: una sola palabra de la pregunta del camarero, más bitte si quieres.",h2:"Por separado = la segunda opción de la pregunta.",e:"Zusammen = juntos · Getrennt = por separado."},
+"L2-34":{q:"En el restaurante, pide la cuenta solo para ti. Usa ich y möchte-.",a:["Ich möchte bitte zahlen.","Ich möchte zahlen, bitte.","Ich möchte gerne zahlen.","Ich möchte gern zahlen.","Ich möchte bitte bezahlen.","Ich möchte zahlen.","Ich möchte bezahlen.","Bitte, ich möchte zahlen."],crit:["möchte"],
+  h2:"Ich + möchte- conjugado para ich + el verbo «pagar» en infinitivo al final.",e:"möchte- en posición 2 + infinitivo al final."},
+"L2-35":{p:"Ich nehme {0} Bier und {1} Dessert.",a:[["ein"],["ein"]],h1:"Bier y Dessert son neutros. ¿Cambia el neutro cuando es complemento directo?",e:"das Bier → ein Bier; das Dessert → ein Dessert."},
+"L2-36":{q:"Escribe en alemán, con artículo determinado: «la sopa».",a:["die Suppe"],crit:["die"],h1:"Es un plato que aparece en la carta (Kartoffel…, Karotten…).",h2:"Es femenina y empieza por Supp-.",e:"Femenino; plural: die Suppen."},
+"L2-37":{p:"{0} Laptop · {1} Tablet · {2} Kassette",a:[["der"],["das"],["die"]],e:"der Laptop, das Tablet, die Kassette."},
+"L2-38":{p:"Pedro hat keine Partnerin. Er ist {0}.",a:[["ledig","Single"]],h1:"No tiene pareja y no está casado.",h2:"Es el adjetivo que significa «soltero»; empieza por l-.",e:"ledig = soltero/a (también: Er ist Single)."},
+"L2-39":{p:"Nimmst du das Schnitzel {0} den Fisch?",a:[["oder"]],h1:"La pregunta ofrece elegir entre dos platos.",e:"oder = alternativa."},
+"L2-40":{p:"Ich brauche der Computer.",a:["Ich brauche den Computer."],crit:["den"],h1:"Computer es el complemento directo de brauchen: está en acusativo.",e:"der Computer → Ich brauche den Computer."},
+/* ---------- Lektion 3 ---------- */
+"L3-11":{p:"Am Freitag {0} wir eine Klausur.",a:[["schreiben"]],h2:"Es el mismo verbo que se usa con un texto o un e-mail. Con wir, igual que el infinitivo.",e:"eine Klausur schreiben → wir schreiben."},
+"L3-12":{p:"Morgen {0} wir ein Referat.",a:[["halten"]],h2:"Una ponencia no se escribe ni se visita: se presenta (empieza por h-). Con wir, igual que el infinitivo.",e:"ein Referat halten → wir halten."},
+"L3-13":{q:"Escribe, con artículo determinado, la parte del día que corresponde a las 10:00.",a:["der Vormittag"],crit:["der"],h1:"Es la parte del día antes del mediodía.",h2:"Es una palabra compuesta: Vor- + der Mittag.",e:"der Morgen, der Vormittag, der Mittag, der Nachmittag…"},
+"L3-14":{q:"Une estas dos expresiones en una sola: am Sonntag + am Morgen.",a:["am Sonntagmorgen","Sonntagmorgen"],h2:"am + Sonntag + morgen, todo junto en una palabra.",e:"Día + parte del día forman una sola palabra (también: am Freitagabend)."},
+"L3-15":{p:"Der Kurs beginnt {0} neun Uhr.",a:[["um"]],e:"um + hora: um neun Uhr."},
+"L3-16":{p:"Das Restaurant ist {0} 12 {1} 15 Uhr geöffnet.",a:[["von"],["bis"]],e:"von … bis …: von 12 bis 15 Uhr."},
+"L3-17":{p:"{0} {1} Nacht ist es kalt.",a:[["in"],["der"]],e:"in der Nacht (pero: am Abend)."},
+"L3-18":{q:"Pregunta a tu profesor (forma formal) si tiene tiempo el lunes.",a:["Haben Sie am Montag Zeit?","Haben Sie Zeit am Montag?","Haben Sie Montag Zeit?"],crit:["haben"],
+  dg:[["\\bhast\\b|\\bdu\\b","Has usado la forma informal. Con el profesor se usa Sie."]],
+  h2:"Empieza por haben conjugado para Sie; el día va con la preposición de los días de la semana.",e:"Formal: Haben Sie am Montag Zeit? · Informal: Hast du …?"},
+"L3-19":{q:"Llegas tarde a clase. Discúlpate con la expresión fija que equivale a «lo siento».",same:1,a:["Tut mir leid.","Es tut mir leid.","Oh, tut mir leid.","Entschuldigung, tut mir leid."],e:"(Es) tut mir leid."},
+"L3-20":{q:"Tu profesor está enfermo. Escribe lo que le deseas en alemán (fórmula fija).",same:1,a:["Gute Besserung!","Gute Besserung, Herr Brandt!"],e:"Fórmula fija para desear que alguien se recupere."},
+"L3-21":{p:"Ich kaufe einen {0} Joghurt.",a:[["Becher"]],h1:"El yogur se vende en un envase pequeño de plástico.",h2:"El envase es masculino (einen …) y empieza por B-.",e:"ein Becher Joghurt (ein Glas Marmelade, eine Packung Müsli)."},
+"L3-22":{p:"Wie {0} Äpfel möchten Sie? – Wie {1} Käse möchten Sie?",a:[["viele"],["viel"]],e:"Wie viele Äpfel? (se cuentan) · Wie viel Käse? (se pesa)."},
+"L3-23":{q:"Eres dependiente. El cliente ya ha pedido. Pregúntale si desea algo más.",a:["Darf es sonst noch etwas sein?","Möchten Sie sonst noch etwas?","Sonst noch etwas?","Darf es noch etwas sein?","Noch etwas?"],
+  h1:"Hay una fórmula fija con dürfen y una palabra que significa «además».",h2:"Darf es sonst … sein? Falta la expresión que significa «algo más».",e:"Fórmulas del dependiente: Darf es sonst noch etwas sein? / Möchten Sie sonst noch etwas?"},
+"L3-24":{q:"Eres cliente. Pide un kilo de manzanas con la fórmula «hätte gern».",
+  a:["Ich hätte gern ein Kilo Äpfel.","Ich hätte gerne ein Kilo Äpfel.","Ich hätte gern 1 Kilo Äpfel.","Ich hätte gerne 1 Kilo Äpfel.","Ich hätte gern ein Kilo Äpfel, bitte.","Ich hätte gerne ein Kilo Äpfel, bitte."],crit:["hätte","kilo"],
+  dg:[["\\b(die|den) aepfel","Con una cantidad no se usa artículo: ein Kilo Äpfel."],["kilos","La unidad Kilo no lleva plural aquí."],["^(?!ich haette gern)","Usa la fórmula pedida: Ich hätte gern …"]],e:"Ich hätte gern + cantidad + unidad + producto, sin artículo."},
+"L3-25":{q:"El dependiente pregunta «Möchten Sie sonst noch etwas?». Responde que no, que eso es todo, y da las gracias.",same:1,
+  a:["Nein, danke. Das ist alles.","Nein, vielen Dank. Das ist alles.","Das ist alles, danke.","Nein, das ist alles. Danke.","Danke, das ist alles.","Nein, das ist alles, danke.","Nein, danke, das ist dann alles.","Das ist dann alles, danke."],crit:["alles"],e:"Fórmula para cerrar la compra: Das ist alles (eso es todo)."},
+"L3-26":{p:"{0} {1}",a:[["die"],["Karotte"]],v:{type:"carrot"},h1:"Es una verdura naranja; la palabra se parece a la española.",h2:"Es femenina, empieza por K- y termina en -e.",e:"Femenino; plural: die Karotten."},
+"L3-27":{v:{type:"weather",w:"rain",alt:1},same:1,a:["Es regnet."],crit:["regnet"],e:"Fenómenos meteorológicos con es + verbo impersonal."},
+"L3-28":{v:{type:"weather",w:"snow",alt:1},same:1,a:["Es schneit."],crit:["schneit"],e:"Fenómenos meteorológicos con es + verbo impersonal."},
+"L3-29":{v:{type:"weather",w:"cloud"},a:["Es ist bewölkt."],crit:["bewölkt"],h1:"Aquí se usa es ist + un adjetivo relacionado con die Wolke.",h2:"El adjetivo empieza por bew- y lleva ö.",e:"es ist + adjetivo (también: windig, sonnig)."},
+"L3-30":{v:{type:"weather",w:"sun",alt:1},same:1,a:["Die Sonne scheint.","Es ist sonnig.","Heute scheint die Sonne."],crit:["scheint","sonnig"],e:"Dos opciones: die Sonne + scheinen, o es ist + sonnig."},
+"L3-31":{v:{type:"thermo",t:18},a:["Es sind 18 Grad.","Es sind achtzehn Grad."],crit:["sind"],dg:[["\\bist\\b","Con varios grados el verbo no va en singular."]],e:"Con varios grados: es sind (no es ist)."},
+"L3-32":{q:"Responde que el supermercado te parece barato. Usa el verbo finden y sustituye «den Supermarkt» por un pronombre.",p:"Wie findest du den Supermarkt?",
+  a:["Ich finde ihn billig."],rx:["^(ich finde ihn|ihn finde ich)( (sehr|ganz|wirklich|total|echt|so|relativ|ziemlich))? billig$"],
+  dg:[["^wie ","Has reformulado la pregunta. Respóndela en primera persona: Ich finde …"],["supermarkt","La respuesta es correcta, pero aquí se pide sustituir «den Supermarkt» por un pronombre."],["(finde|finden) (sie|es|er|ihm)\\b","Revisa el pronombre: Supermarkt es masculino (der Supermarkt)."]],
+  h1:"Tienes que responder a la pregunta dando tu opinión (no repetirla) y sustituir «den Supermarkt» por un pronombre.",h2:"Empieza por Ich finde … Supermarkt es masculino: su pronombre en acusativo no es er.",e:"El pronombre sustituye a den Supermarkt: er → ihn en acusativo."},
+"L3-33":{p:"Besuchst du mich am Samstag? – Ja, ich besuche {0} gern.",a:[["dich"]],h1:"La respuesta se dirige a la persona que pregunta. Desde el otro lado, mich se convierte en…",h2:"Es el acusativo de du; empieza por d-.",e:"ich → mich; du → dich."},
+"L3-34":{p:"Ich war krank und ich {0} keine Zeit.",a:[["hatte"]],h2:"Raíz hatt- + la terminación de ich.",e:"ich hatte (wir hatten)."},
+"L3-35":{p:"Wo {0} ihr am Wochenende? – Wir waren auf Rügen.",a:[["wart"]],h1:"Usa la raíz del Präteritum de sein con la terminación de ihr.",h2:"Raíz war- + -t.",e:"ihr wart (wir waren, du warst)."},
+"L3-36":{q:"Reescribe la oración empezando por «Am Samstag». Mantén todas las palabras.",p:"Das Wetter war am Samstag nicht so gut.",a:["Am Samstag war das Wetter nicht so gut."],
+  h2:"«Am Samstag» ocupa la posición 1; war va en la posición 2 y el sujeto (das Wetter) detrás.",e:"Am Samstag (1) + war (2) + das Wetter + nicht so gut."},
+"L3-37":{p:"Leider das Wetter war nicht gut.",a:["Leider war das Wetter nicht gut."],h1:"La oración empieza por un adverbio. ¿Dónde tiene que ir el verbo?",h2:"El verbo (war) va en la posición 2 y el sujeto (das Wetter) detrás.",e:"Leider (1) + war (2) + das Wetter + nicht gut."},
+"L3-38":{v:{type:"clock",h:7,m:30},a:["sieben Uhr dreißig","Es ist sieben Uhr dreißig."],crit:["uhr"],h2:"sieben + Uhr + los minutos en letras.",e:"7:30 → sieben Uhr dreißig (coloquial: halb acht)."},
+"L3-39":{v:{type:"clock",h:15,m:30},a:["halb vier","Es ist halb vier."],crit:["vier"],h2:"Se usa halb + la hora que viene después de las 15:00, contada en formato de 12 horas.",e:"15:30 → halb vier."},
+"L3-40":{v:{type:"clock",h:9,m:25},a:["fünf vor halb zehn","Es ist fünf vor halb zehn."],crit:["vor","halb","zehn"],h2:"Se cuenta desde la media hora: fünf vor halb + la hora que viene después de las 9:00.",e:"9:25 → fünf vor halb zehn."}
+};
+var ADAPTIVE = (function () {
+  var out = [], keep = ["c","s","x","t","k","l","g","m","q","h1","h2","e","lex","strict","ord","clk","d"];
+  ITEMS.forEach(function (b) {
+    var v = VARIANTS[b.id]; if (!v) return;
+    var it = { id: b.id + "a", er: "A", pair: b.id.replace("-", ""), base: b.id, crit: [] };
+    keep.forEach(function (k) { if (b[k] !== undefined) it[k] = b[k]; });
+    for (var k in v) it[k] = v[k];
+    if (it.p === undefined && b.p) it.p = b.p;
+    out.push(it);
+  });
+  return out;
+})();
+if (typeof module !== "undefined") module.exports = { VARIANTS: VARIANTS, ADAPTIVE: ADAPTIVE };
+
+var ORDER = ["L2-05","L2-39","L3-25","L1-29","L1-14","L2-33","L1-30","L2-16","L3-05","L1-07","L1-11","L2-06","L1-19","L1-05","L2-09","L2-13","L1-28","L1-08","L3-01","L2-28","L3-06","L1-06","L2-12","L1-01","L2-10","L1-35","L1-26","L3-28","L2-23","L3-02","L1-17","L1-02","L3-30","L3-26","L1-34","L3-16","L3-34","L1-25","L3-38","L3-19","L2-32","L3-15","L1-18","L2-15","L2-19","L3-12","L2-27","L3-18","L3-27","L2-03","L2-07","L1-23","L2-38","L1-31","L2-24","L2-30","L3-37","L2-04","L2-08","L1-32","L3-14","L2-34","L1-16","L3-22","L3-31","L2-36","L2-11","L1-13","L1-38","L2-17","L2-14","L3-17","L3-09","L2-35","L3-03","L2-40","L3-07","L1-24","L3-40","L1-33","L3-10","L3-29","L2-31","L3-13","L3-04","L2-01","L3-08","L1-12","L2-21","L2-25","L1-03","L1-37","L3-32","L2-02","L1-36","L2-20","L3-35","L2-37","L1-04","L3-33","L3-36","L2-22","L1-22","L3-21","L2-26","L1-09","L2-18","L1-20","L3-23","L1-40","L2-29","L3-20","L3-39","L1-10","L1-15","L3-24","L1-27","L3-11","L1-39","L1-21"];
+if (typeof module !== 'undefined') module.exports = ORDER;
+
+/* NeuroTutor · motor de corrección (compartido por la app y por las pruebas automáticas) */
+var NTEngine = (function () {
+  var ACCEPT_SS = true; // «ss» por «ß» (convención ortográfica válida)
+
+  function fixKeyboard(s) { // B mayúscula tras minúscula = ß en teclado español (heiBe, dreiBig)
+    return String(s || "").replace(/([a-zäöüß])B/g, "$1ß");
+  }
+  function norm(s) {
+    s = fixKeyboard(s).toLowerCase();
+    s = s.replace(/[’'`´]/g, "").replace(/ı/g, "i");
+    s = s.replace(/[.,!?;:¡¿"«»()\u2013\u2014]/g, " ");
+    s = s.replace(/ä/g, "ae").replace(/ö/g, "oe").replace(/ü/g, "ue");
+    if (ACCEPT_SS) s = s.replace(/ß/g, "ss");
+    return s.replace(/\s+/g, " ").trim();
+  }
+  // forma esperada con ß tecleada como «b» minúscula (heibt): solo cuenta si coincide con una respuesta prevista
+  function normB(s) { return /ß/.test(s) ? norm(String(s).replace(/ß/g, "b")) : null; }
+
+  function lev(a, b) { // Damerau-Levenshtein (OSA): una transposición = 1
+    var m = a.length, n = b.length, d = [], i, j;
+    for (i = 0; i <= m; i++) d[i] = [i];
+    for (j = 1; j <= n; j++) d[0][j] = j;
+    for (i = 1; i <= m; i++) for (j = 1; j <= n; j++) {
+      var c = a[i - 1] === b[j - 1] ? 0 : 1;
+      d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + c);
+      if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) d[i][j] = Math.min(d[i][j], d[i - 2][j - 2] + 1);
+    }
+    return d[m][n];
+  }
+  function rawTokens(s) { return String(s).replace(/[.,!?;:¡¿"«»]/g, " ").split(/\s+/).filter(Boolean); }
+
+  /* Palabras funcionales y numerales: cambiar una por otra nunca es una errata, es otra palabra */
+  var FUNC = ("der die das den dem des ein eine einen einem einer kein keine keinen keinem ich du er sie es wir ihr ihn ihm mich dich mir dir uns euch " +
+    "mein meine meinen dein deine deinen sein seine seinen ihre ihren unser unsere euer eure am um im in an aus von bis vor nach zu " +
+    "und aber oder denn nicht ist sind bin bist seid war warst wart waren hat hast habe haben habt hatte hattest hatten hattet " +
+    "wo wie woher was wer wen viel viele halb viertel").split(" ").map(norm);
+  var NUMW = ("null eins ein zwei drei vier fünf sechs sieben acht neun zehn elf zwölf dreizehn vierzehn fünfzehn sechzehn siebzehn achtzehn neunzehn " +
+    "zwanzig dreißig vierzig fünfzig sechzig siebzig achtzig neunzig hundert").split(" ").map(norm);
+  var ENDINGS = ["est", "en", "st", "et", "em", "er", "es", "e", "t", "n", "s"];
+  function stem(w) { for (var i = 0; i < ENDINGS.length; i++) { var e = ENDINGS[i]; if (w.length > e.length + 2 && w.slice(-e.length) === e) return w.slice(0, -e.length); } return w; }
+  // ¿la diferencia es de flexión (misma raíz, distinta terminación)? → error del constructo, no errata
+  function inflectional(a, b) { return a !== b && stem(a) === stem(b); }
+  function tolFor(len) { return len <= 2 ? 0 : len <= 8 ? 1 : 2; }
+  /* ¿«got» es una errata de «exp»? (exp/got normalizados) */
+  function isSlip(exp, got, item, isCrit) {
+    if (!got || exp === got) return false;
+    if (FUNC.indexOf(got) > -1 || NUMW.indexOf(got) > -1) return false;
+    if ((item.rv || []).map(norm).indexOf(got) > -1) return false;
+    if (isCrit && inflectional(exp, got)) return false;
+    var t = tolFor(exp.length); if (isCrit) t = Math.min(t, 1);
+    return lev(exp, got) <= t;
+  }
+
+  function diagnose(item, resp) {
+    var r = norm(resp);
+    for (var i = 0; i < (item.dg || []).length; i++) {
+      if (new RegExp(item.dg[i][0]).test(r)) return { msg: item.dg[i][1], ex: item.dg[i][2] || null };
+    }
+    return null;
+  }
+
+  function gradeSentence(item, resp) {
+    var r = norm(resp), i, k;
+    if (!r) return { ok: false, empty: true };
+    for (i = 0; i < item.a.length; i++) if (norm(item.a[i]) === r || normB(item.a[i]) === r) return { ok: true, ortho: [], canon: item.a[i] };
+    for (i = 0; i < (item.rx || []).length; i++) if (new RegExp(item.rx[i]).test(r)) return { ok: true, ortho: [], canon: resp.trim() };
+    var rt = r.split(" "), rr = rawTokens(fixKeyboard(resp)), crit = (item.crit || []).map(norm);
+    for (i = 0; i < item.a.length; i++) {
+      var at = norm(item.a[i]).split(" "), atB = (normB(item.a[i]) || norm(item.a[i])).split(" "), raw = rawTokens(item.a[i]);
+      if (at.length !== rt.length) continue;
+      var slips = [], good = true;
+      if (item.ord) {
+        // constructo = orden: cada palabra se identifica con la esperada más cercana; el orden debe coincidir
+        var used = [];
+        for (k = 0; k < rt.length && good; k++) {
+          var best = -1, bestD = 99, tie = false;
+          for (var j = 0; j < at.length; j++) {
+            if (used[j]) continue;
+            var dd = Math.min(lev(at[j], rt[k]), lev(atB[j], rt[k]));
+            if (dd < bestD) { bestD = dd; best = j; tie = false; } else if (dd === bestD && at[j] !== at[best]) tie = true;
+          }
+          var tol = best < 0 ? 0 : (at[best].length <= 2 ? 0 : at[best].length <= 4 ? 1 : 2);
+          if (best < 0 || tie || bestD > tol || best !== k) { good = false; break; }
+          if (bestD > 0 && (FUNC.indexOf(rt[k]) > -1)) { good = false; break; }
+          used[best] = true;
+          if (bestD > 0 && atB[k] !== rt[k]) slips.push({ from: rr[k] || rt[k], to: raw[k] || at[k] });
+        }
+      } else {
+        for (k = 0; k < at.length; k++) {
+          if (at[k] === rt[k] || atB[k] === rt[k]) continue;
+          if (isSlip(at[k], rt[k], item, crit.indexOf(at[k]) > -1)) slips.push({ from: rr[k] || rt[k], to: raw[k] || at[k] });
+          else { good = false; break; }
+        }
+      }
+      if (good && slips.length) return { ok: true, ortho: slips, canon: item.a[i] };
+    }
+    return { ok: false };
+  }
+  /* Huecos: léxicos (vocabulario) con tolerancia amplia; gramaticales con tolerancia solo para erratas
+     de raíz que no sean otra forma del paradigma; «strict» = sin tolerancia (cambio vocálico, ß, Umlaut…) */
+  function lexTol(len) { return len >= 9 ? 2 : len >= 5 ? 1 : 0; }
+  function gradeBlanks(item, resps) {
+    var per = [], all = true, empty = true, ortho = [], lex = item.lex || [];
+    for (var i = 0; i < item.a.length; i++) {
+      var raw = String(resps[i] == null ? "" : resps[i]), r = norm(raw);
+      if (r) empty = false;
+      var ok = item.a[i].some(function (x) { return norm(x) === r || normB(x) === r; });
+      if (!ok && r) {
+        for (var j = 0; j < item.a[i].length && !ok; j++) {
+          var t = norm(item.a[i][j]), slip = false;
+          if (FUNC.indexOf(r) > -1 || NUMW.indexOf(r) > -1 || (item.rv || []).map(norm).indexOf(r) > -1) slip = false;
+          else if (lex.indexOf(i) > -1) slip = lev(t, r) <= lexTol(t.length);
+          else if (!item.strict && t.length >= 5) slip = !inflectional(t, r) && lev(t, r) === 1 && t.charAt(0) === r.charAt(0);
+          if (slip) { ok = true; ortho.push({ from: raw.trim(), to: item.a[i][j] }); }
+        }
+      }
+      per.push(ok); if (!ok) all = false;
+    }
+    return { ok: all, per: per, empty: empty, ortho: ortho };
+  }
+  function grade(item, resp) {
+    var g;
+    if (item.m === "b") g = gradeBlanks(item, resp);
+    else if (item.m === "t") { var r = norm(resp); g = { ok: item.a.some(function (x) { return norm(x) === r; }), ortho: [], empty: !r }; }
+    else g = gradeSentence(item, resp);
+    if (!g.ok && !g.empty) {
+      g.reg = registerSwap(item, resp);
+      g.diag = diagnose(item, item.m === "b" ? resp.join(" ") : resp);
+    }
+    return g;
+  }
+  /* Hora: la misma variable alimenta reloj analógico, digital, solución y detección del registro */
+  var NUM = ["null","eins","zwei","drei","vier","fünf","sechs","sieben","acht","neun","zehn","elf","zwölf"];
+  function hour12(h) { var x = h % 12; return x === 0 ? 12 : x; }
+  function informalTime(h, m) {
+    var next = NUM[hour12(h + 1)], cur = NUM[hour12(h)];
+    if (m === 0) return cur;
+    if (m === 15) return "Viertel nach " + cur;
+    if (m === 30) return "halb " + next;
+    if (m === 45) return "Viertel vor " + next;
+    if (m === 25) return "fünf vor halb " + next;
+    if (m === 35) return "fünf nach halb " + next;
+    if (m < 30) return numWord(m) + " nach " + cur;
+    return numWord(60 - m) + " vor " + next;
+  }
+  var TENS = {20:"zwanzig",30:"dreißig",40:"vierzig",50:"fünfzig"};
+  var TEENS = {13:"dreizehn",14:"vierzehn",15:"fünfzehn",16:"sechzehn",17:"siebzehn",18:"achtzehn",19:"neunzehn"};
+  function numWord(n) {
+    if (n <= 12) return n === 1 ? "eins" : NUM[n];
+    if (TEENS[n]) return TEENS[n];
+    if (n % 10 === 0) return TENS[n];
+    var u = n % 10; return (u === 1 ? "ein" : NUM[u]) + "und" + TENS[n - u];
+  }
+  function officialTime(h, m) { return (h === 1 ? "ein" : numWord(h)) + " Uhr" + (m ? " " + numWord(m) : ""); }
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+  function digital(h, m) { return pad(h) + ":" + pad(m); }
+  function timeForms(h, m, reg) {
+    var base = reg === "off" ? [officialTime(h, m), officialTime(hour12(h), m)] : [informalTime(h, m)];
+    if (reg === "inf" && m === 45) base.push("dreiviertel " + NUM[hour12(h + 1)]);
+    var out = []; base.forEach(function (x) { out.push(norm(x)); out.push(norm("es ist " + x)); });
+    return out;
+  }
+  // ¿hora correcta pero en el registro equivocado?
+  function registerSwap(item, resp) {
+    if (!item.clk || !item.v || item.v.type !== "clock") return null;
+    var r = norm(resp), other = item.clk === "inf" ? "off" : "inf";
+    return timeForms(item.v.h, item.v.m, other).indexOf(r) > -1 ? other : null;
+  }
+  function solutionText(item) {
+    if (item.m === "b") {
+      return item.p.replace(/\{(\d+)\}/g, function (m0, n, off, str) {
+        var w = item.a[+n][0], before = str.slice(0, off);
+        if (/^\s*$/.test(before) || /[.?!–]\s*$/.test(before)) w = w.charAt(0).toUpperCase() + w.slice(1);
+        return w;
+      });
+    }
+    return item.a[0];
+  }
+  return { norm: norm, lev: lev, grade: grade, solutionText: solutionText, informalTime: informalTime, officialTime: officialTime,
+           digital: digital, fixKeyboard: fixKeyboard, diagnose: diagnose, registerSwap: registerSwap, timeForms: timeForms, ACCEPT_SS: ACCEPT_SS };
+})();
+if (typeof module !== "undefined") module.exports = NTEngine;
+
+/* NeuroTutor · aplicación (SCORM 1.2) */
+(function () {
+  "use strict";
+  var E = NTEngine, BY = {}, N = ORDER.length;
+  ITEMS.concat(ADAPTIVE).forEach(function (it) { BY[it.id] = it; });
+  var VARIANT_OF = {}; ADAPTIVE.forEach(function (a) { VARIANT_OF[a.base] = a.id; });
+  // pares E→R: posiciones para saber qué ventanas están abiertas
+  var PAIRS = []; ITEMS.forEach(function (it) { if (it.er === "E") { var r = ITEMS.filter(function (x) { return x.pair === it.pair && x.er === "R"; })[0]; PAIRS.push({ e: POS_OF(it.id), r: POS_OF(r.id), g: it.g || [] }); } });
+  function POS_OF(id) { return ORDER.indexOf(id); }
+  var POS = {}; ORDER.forEach(function (id, i) { POS[id] = i; });
+
+  /* ---------------- SCORM 1.2 ---------------- */
+  var API = null;
+  function findAPI(w) {
+    var n = 0;
+    while (w && !w.API && w.parent && w.parent !== w && n < 12) { w = w.parent; n++; }
+    return w && w.API ? w.API : null;
+  }
+  try { API = findAPI(window) || (window.opener ? findAPI(window.opener) : null); } catch (e) { API = null; }
+  var LMS = {
+    on: false,
+    init: function () { if (API) { try { var r = API.LMSInitialize(""); this.on = (r === "true" || r === true); } catch (e) { this.on = false; } } },
+    get: function (k) { try { return API ? String(API.LMSGetValue(k) || "") : ""; } catch (e) { return ""; } },
+    set: function (k, v) { try { if (API) API.LMSSetValue(k, String(v)); } catch (e) {} },
+    commit: function () { try { if (API) API.LMSCommit(""); } catch (e) {} },
+    finish: function () { try { if (API) API.LMSFinish(""); } catch (e) {} }
+  };
+  var LOCAL_KEY = "neurotutor-preview-v1";
+  function loadRaw() {
+    if (API) return LMS.get("cmi.suspend_data");
+    try { return localStorage.getItem(LOCAL_KEY) || ""; } catch (e) { return ""; }
+  }
+  function saveRaw(s) {
+    if (API) { LMS.set("cmi.suspend_data", s); LMS.set("cmi.core.lesson_location", String(st.i)); LMS.commit(); }
+    else { try { localStorage.setItem(LOCAL_KEY, s); } catch (e) {} }
+  }
+
+  /* ---------------- Estado (compacto: cabe holgadamente en 4096 caracteres) ---------------- */
+  // r: un carácter por posición: 0 pendiente · 1 correcta al primer intento · 2 correcta tras pista(s)
+  //    3 solución tras 3 fallos · 4 corrección directa (FD) · 5 constructo correcto con errata ortográfica
+  var st = null;
+  function fresh() {
+    // q: recuperaciones adaptativas pendientes [id, paso previsto, paso de origen, segundos de origen]
+    // ad: resultados adaptativos {id: código}; step: actividades completadas (base + adaptativas); ow: erratas [de, a]
+    return { v: 2, i: 0, r: new Array(N + 1).join("0"), c: [0, 0], pc: {}, et: {}, ck: 0, cur: null, t0: Math.floor(Date.now() / 1000), ix: 0, q: [], ad: {}, step: 0, ow: [] };
+  }
+  function save() { saveRaw(JSON.stringify(st)); }
+  function load() {
+    var raw = loadRaw();
+    if (raw) { try { var o = JSON.parse(raw); if (o && o.r && o.r.length === N) { if (o.v !== 2) { o.v = 2; o.q = o.q || []; o.ad = o.ad || {}; o.step = o.step || o.r.replace(/0/g, "").length; o.ow = o.ow || []; } return o; } } catch (e) {} }
+    return null;
+  }
+
+  /* ---------------- Interacciones SCORM ---------------- */
+  function scTime(d) { d = d || new Date(); return pad2(d.getHours()) + ":" + pad2(d.getMinutes()) + ":" + pad2(d.getSeconds()); }
+  function pad2(n) { return (n < 10 ? "0" : "") + n; }
+  function span(ms) {
+    var s = Math.max(0, ms / 1000), h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), r = (s % 60).toFixed(2);
+    return pad2(h) + ":" + pad2(m) + ":" + (r < 10 ? "0" : "") + r;
+  }
+  function clean(s, n) { return String(s == null ? "" : s).replace(/[\r\n]/g, " ").slice(0, n || 80); }
+  function iid(it, cond, suffix) {
+    return it.id.replace("-", "") + "_" + (it.er || "X") + "_" + (it.pair || "p00") + "_" + cond + "_" + suffix;
+  }
+  function logInteraction(id, type, resp, result, latencyMs, pattern) {
+    if (!API) return;
+    var n = st.ix++, b = "cmi.interactions." + n + ".";
+    LMS.set(b + "id", id);
+    LMS.set(b + "type", type);
+    LMS.set(b + "time", scTime());
+    LMS.set(b + "weighting", "1");
+    if (pattern) LMS.set(b + "correct_responses.0.pattern", clean(pattern, 250));
+    LMS.set(b + "student_response", clean(resp, 250));
+    LMS.set(b + "result", result);
+    LMS.set(b + "latency", span(latencyMs || 0));
+  }
+
+  /* ---------------- Utilidades UI ---------------- */
+  var app = document.getElementById("app");
+  var bar = document.getElementById("bar"), count = document.getElementById("count");
+  function h(tag, attrs, html) {
+    var el = document.createElement(tag);
+    if (attrs) for (var k in attrs) { if (k === "class") el.className = attrs[k]; else el.setAttribute(k, attrs[k]); }
+    if (html != null) el.innerHTML = html;
+    return el;
+  }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function progress() {
+    var d = st.step, tot = N + Object.keys(st.ad).length + st.q.length;
+    bar.style.width = (100 * d / tot) + "%";
+    count.textContent = d + " / " + tot;
+    var pb = document.getElementById("progress"); pb.setAttribute("aria-valuenow", d); pb.setAttribute("aria-valuemax", tot);
+  }
+  function hashSeed(str) { var x = 0; for (var i = 0; i < str.length; i++) x = (x * 31 + str.charCodeAt(i)) >>> 0; return x; }
+  function shuffled(arr, seedStr, avoid) {
+    var a = arr.slice(), s = hashSeed(seedStr);
+    for (var t = 0; t < 6; t++) {
+      for (var i = a.length - 1; i > 0; i--) { s = (s * 1103515245 + 12345) >>> 0; var j = s % (i + 1); var tmp = a[i]; a[i] = a[j]; a[j] = tmp; }
+      if (!avoid || avoid.every(function (x) { return E.norm(a.join(" ")) !== E.norm(x); })) break;
+    }
+    return a;
+  }
+
+  /* ---------------- Estímulos visuales (SVG originales) ---------------- */
+  var VIS = {
+    clock: function (v) {
+      var hh = v.h, mm = v.m, ticks = "", nums = "";
+      for (var i = 0; i < 60; i++) {
+        var a = i * 6 * Math.PI / 180, big = i % 5 === 0, r1 = big ? 78 : 84, r2 = 90;
+        ticks += '<line x1="' + (100 + r1 * Math.sin(a)).toFixed(1) + '" y1="' + (100 - r1 * Math.cos(a)).toFixed(1) + '" x2="' + (100 + r2 * Math.sin(a)).toFixed(1) + '" y2="' + (100 - r2 * Math.cos(a)).toFixed(1) + '" stroke="currentColor" stroke-width="' + (big ? 3.2 : 1.2) + '" stroke-linecap="round"/>';
+      }
+      [12, 3, 6, 9].forEach(function (n) {
+        var a = n * 30 * Math.PI / 180;
+        nums += '<text x="' + (100 + 62 * Math.sin(a)).toFixed(1) + '" y="' + (100 - 62 * Math.cos(a) + 7).toFixed(1) + '" text-anchor="middle" font-size="20" font-weight="700" fill="currentColor">' + n + '</text>';
+      });
+      var ha = ((hh % 12) + mm / 60) * 30, ma = mm * 6;
+      var svg = '<svg viewBox="0 0 200 200" class="clock" role="img" aria-label="Reloj analógico"><circle cx="100" cy="100" r="96" fill="var(--face)" stroke="currentColor" stroke-width="4"/>' + ticks + nums +
+        '<line x1="100" y1="100" x2="100" y2="52" stroke="currentColor" stroke-width="8" stroke-linecap="round" transform="rotate(' + ha + ' 100 100)"/>' +
+        '<line x1="100" y1="100" x2="100" y2="26" stroke="var(--violet)" stroke-width="5" stroke-linecap="round" transform="rotate(' + ma + ' 100 100)"/>' +
+        '<circle cx="100" cy="100" r="6" fill="var(--violet)"/></svg>';
+      return '<div class="clockwrap">' + svg + '<div class="digital" aria-label="Hora digital">' + E.digital(hh, mm) + '</div></div>';
+    },
+    weather: function (v) {
+      var cloud = function (x, y, s, c) { return '<g transform="translate(' + x + ' ' + y + ') scale(' + s + ')" fill="' + c + '"><circle cx="40" cy="40" r="26"/><circle cx="72" cy="30" r="32"/><circle cx="104" cy="44" r="24"/><rect x="40" y="40" width="64" height="28" rx="12"/></g>'; };
+      var w = v.w, body = "";
+      if (w === "rain") {
+        body = '<rect width="320" height="200" fill="#7C8BA6"/>' + cloud(60, 10, 1.4, "#E6EAF2") + cloud(-10, 40, 0.9, "#C9D0DE");
+        for (var i = 0; i < 26; i++) { var x = 30 + (i * 37) % 270, y = 110 + (i * 23) % 70; body += '<line x1="' + x + '" y1="' + y + '" x2="' + (x - 6) + '" y2="' + (y + 16) + '" stroke="#2F6BD8" stroke-width="4" stroke-linecap="round"/>'; }
+      } else if (w === "snow") {
+        body = '<rect width="320" height="200" fill="#A9B8CF"/><rect y="168" width="320" height="32" fill="#FFFFFF"/>' + cloud(70, 6, 1.3, "#F2F5FA");
+        for (var j = 0; j < 22; j++) { var sx = 25 + (j * 41) % 280, sy = 105 + (j * 29) % 60; body += '<g stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" transform="translate(' + sx + ' ' + sy + ')"><line x1="-7" y1="0" x2="7" y2="0"/><line x1="-3.5" y1="-6" x2="3.5" y2="6"/><line x1="-3.5" y1="6" x2="3.5" y2="-6"/></g>'; }
+      } else if (w === "wind") {
+        body = '<rect width="320" height="200" fill="#BFE0F5"/><rect y="160" width="320" height="40" fill="#8CC66C"/>' +
+          '<line x1="70" y1="160" x2="70" y2="40" stroke="#5A5F6B" stroke-width="6"/>' +
+          '<path d="M73 44 L190 56 L190 82 L73 92 Z" fill="#F0566A"/><path d="M110 48 L110 88 M150 52 L150 86" stroke="#FFFFFF" stroke-width="10"/>' +
+          '<path d="M205 70 q30 -14 60 0 t50 0 M200 104 q34 -14 68 0 t44 0 M215 132 q26 -12 52 0" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round"/>' +
+          '<path d="M250 160 q6 -30 34 -46" fill="none" stroke="#3C7A33" stroke-width="6" stroke-linecap="round"/><path d="M262 160 q8 -24 40 -32" fill="none" stroke="#3C7A33" stroke-width="5" stroke-linecap="round"/>';
+      } else {
+        body = '<rect width="320" height="200" fill="#5BB8F2"/><ellipse cx="160" cy="215" rx="230" ry="60" fill="#79C35B"/>';
+        for (var k = 0; k < 12; k++) { var a = k * 30; body += '<line x1="160" y1="22" x2="160" y2="4" stroke="#FFC23D" stroke-width="7" stroke-linecap="round" transform="rotate(' + a + ' 160 86)"/>'; }
+        body += '<circle cx="160" cy="86" r="44" fill="#FFC23D"/>';
+      }
+      if (w === "cloud") {
+        body = '<rect width="320" height="200" fill="#9FB3C8"/><rect y="168" width="320" height="32" fill="#7FA36A"/>' + cloud(-20, 20, 1.2, "#E9EDF3") + cloud(120, 0, 1.4, "#F6F8FB") + cloud(40, 70, 1.3, "#D7DEE8") + cloud(190, 80, 1.0, "#E9EDF3");
+      }
+      if (v.alt) { // misma estructura, otra escena: un pueblo en primer plano
+        var town = '<g fill="#3B3F55" opacity=".85"><rect x="20" y="150" width="50" height="50"/><path d="M14 152 L45 124 L76 152Z"/><rect x="88" y="138" width="40" height="62"/><path d="M82 140 L108 116 L134 140Z"/><rect x="232" y="146" width="60" height="54"/><path d="M226 148 L262 120 L298 148Z"/></g>' +
+          '<g fill="#FFD66B"><rect x="34" y="164" width="10" height="10"/><rect x="100" y="152" width="10" height="10"/><rect x="250" y="162" width="10" height="10"/></g>';
+        body += town;
+      }
+      var label = "Escena meteorológica";
+      return '<svg viewBox="0 0 320 200" class="scene" role="img" aria-label="' + label + '">' + body + '</svg>';
+    },
+    thermo: function (v) {
+      var t = v.t, top = 30, bottom = 210, y = bottom - (t / 40) * (bottom - top), marks = "";
+      for (var d = 0; d <= 40; d += 10) { var yy = bottom - (d / 40) * (bottom - top); marks += '<line x1="128" y1="' + yy + '" x2="142" y2="' + yy + '" stroke="currentColor" stroke-width="2"/><text x="150" y="' + (yy + 5) + '" font-size="14" fill="currentColor">' + d + '</text>'; }
+      return '<svg viewBox="0 0 260 260" class="scene small" role="img" aria-label="Termómetro"><rect x="98" y="20" width="26" height="200" rx="13" fill="var(--face)" stroke="currentColor" stroke-width="3"/>' +
+        '<rect x="104" y="' + y + '" width="14" height="' + (bottom + 14 - y) + '" rx="7" fill="#E8506A"/><circle cx="111" cy="228" r="22" fill="#E8506A" stroke="currentColor" stroke-width="3"/>' + marks +
+        '<text x="30" y="128" font-size="30" font-weight="800" fill="currentColor">' + t + ' °C</text></svg>';
+    },
+    apple: function () {
+      return '<svg viewBox="0 0 200 200" class="scene small" role="img" aria-label="Fruta"><path d="M100 58 C70 36 26 52 30 104 C34 158 72 186 100 170 C128 186 166 158 170 104 C174 52 130 36 100 58 Z" fill="#E23C3C"/>' +
+        '<path d="M100 60 C100 44 104 32 112 22" stroke="#6B4B2A" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M110 40 C128 22 152 26 160 32 C148 50 126 52 110 40 Z" fill="#4FA34A"/>' +
+        '<ellipse cx="66" cy="92" rx="10" ry="20" fill="#FFFFFF" opacity=".35" transform="rotate(20 66 92)"/></svg>';
+    },
+    banana: function () {
+      return '<svg viewBox="0 0 220 200" class="scene small" role="img" aria-label="Fruta"><path d="M30 60 C40 150 120 186 196 140 C200 134 196 128 188 130 C128 154 70 130 52 56 Z" fill="#FFD23F" stroke="#C99A12" stroke-width="4" stroke-linejoin="round"/>' +
+        '<path d="M30 60 L24 44 L40 40 L52 56" fill="#7A5A1E"/><path d="M60 80 C78 128 120 148 170 140" stroke="#E5B219" stroke-width="4" fill="none"/></svg>';
+    },
+    ball: function () {
+      return '<svg viewBox="0 0 200 200" class="scene small" role="img" aria-label="Objeto del aula"><circle cx="100" cy="100" r="80" fill="#FFFFFF" stroke="#1E1C3B" stroke-width="5"/>' +
+        '<path d="M100 20 A80 80 0 0 1 180 100 L100 100 Z" fill="#E8506A"/><path d="M100 180 A80 80 0 0 1 20 100 L100 100 Z" fill="#2F6BD8"/>' +
+        '<path d="M20 100 A80 80 0 0 1 100 20 L100 100 Z" fill="#FFC23D"/><path d="M180 100 A80 80 0 0 1 100 180 L100 100 Z" fill="#2FB57C"/>' +
+        '<circle cx="100" cy="100" r="80" fill="none" stroke="#1E1C3B" stroke-width="5"/><ellipse cx="70" cy="62" rx="16" ry="9" fill="#FFFFFF" opacity=".45" transform="rotate(-30 70 62)"/></svg>';
+    },
+    carrot: function () {
+      return '<svg viewBox="0 0 220 200" class="scene small" role="img" aria-label="Verdura"><path d="M60 70 C90 60 140 70 170 92 C150 110 100 150 34 178 C46 130 46 96 60 70 Z" fill="#F28A1E" stroke="#C4650C" stroke-width="4" stroke-linejoin="round"/>' +
+        '<path d="M80 100 l18 6 M70 128 l18 4 M110 86 l14 8 M60 150 l14 2" stroke="#C4650C" stroke-width="4" stroke-linecap="round"/>' +
+        '<path d="M166 88 C170 60 160 40 150 26 M170 90 C186 70 196 52 200 36 M168 90 C190 86 206 80 214 70" fill="none" stroke="#3E9B3A" stroke-width="8" stroke-linecap="round"/></svg>';
+    },
+    family: function () {
+      function person(x, y, name, col, sym) {
+        return '<g transform="translate(' + x + ' ' + y + ')"><circle cx="0" cy="-26" r="16" fill="' + col + '"/><path d="M-24 14 C-24 -6 24 -6 24 14 Z" fill="' + col + '"/>' +
+          '<text x="0" y="40" text-anchor="middle" font-size="17" font-weight="700" fill="currentColor">' + name + ' ' + sym + '</text></g>';
+      }
+      return '<svg viewBox="0 0 340 240" class="scene" role="img" aria-label="Árbol familiar">' +
+        '<path d="M110 74 H230 M170 74 V132 M90 132 H250 M90 132 V150 M250 132 V150" fill="none" stroke="currentColor" stroke-width="3" opacity=".55"/>' +
+        person(90, 66, "Anna", "#F0566A", "♀") + person(250, 66, "Peter", "#5B47E0", "♂") +
+        person(90, 192, "Lukas", "#5B47E0", "♂") + person(250, 192, "Mia", "#F0566A", "♀") + '</svg>';
+    }
+  };
+
+  /* ---------------- Pantallas ---------------- */
+  var stage = "idle"; // answering | done | screen
+  var lock = 0, tShown = 0, curItem = null, primaryAction = null;
+  var LOGO_BIG = '<svg class="logo big" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="gi" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--violet)"/><stop offset="1" stop-color="var(--violet-2)"/></linearGradient><radialGradient id="si"><stop offset="0" stop-color="#FFF6D6"/><stop offset=".45" stop-color="var(--sun)"/><stop offset="1" stop-color="var(--sun)" stop-opacity="0"/></radialGradient></defs><g class="lobes"><path d="M31 9C24 5 14 8 13 16C7 17 4 25 8 30C4 36 7 44 13 45C14 52 23 57 31 53Z" fill="url(#gi)"/><path d="M33 9C40 5 50 8 51 16C57 17 60 25 56 30C60 36 57 44 51 45C50 52 41 57 33 53Z" fill="url(#gi)"/></g><g fill="none" stroke="#fff" stroke-linecap="round" stroke-width="2" opacity=".38"><path d="M23 13C19 17 23 21 19 25M10 31C15 30 17 34 22 33M23 49C21 45 25 43 23 39"/><path d="M41 13C45 17 41 21 45 25M54 31C49 30 47 34 42 33M41 49C43 45 39 43 41 39"/></g><path id="ni" d="M19 24L27 31L37 21L46 30L37 41L26 41Z" fill="none" stroke="#fff" stroke-width="1.6" stroke-linejoin="round" opacity=".85"/><g fill="#fff" class="nodes"><circle cx="19" cy="24" r="2.6"/><circle cx="27" cy="31" r="2.6"/><circle cx="37" cy="21" r="2.6"/><circle cx="46" cy="30" r="2.6"/><circle cx="37" cy="41" r="2.6"/><circle cx="26" cy="41" r="2.6"/></g><g class="spark"><circle r="6" fill="url(#si)"><animateMotion dur="3.2s" repeatCount="indefinite" rotate="auto"><mpath href="#ni"/></animateMotion></circle></g></svg>';
+
+  function studentFirstName() {
+    var n = LMS.get("cmi.core.student_name"); if (!n) return "";
+    var parts = n.split(","), first = (parts[1] || parts[0]).trim().split(/\s+/)[0] || "";
+    return first.toLowerCase().replace(/(^|-)(\S)/g, function (m, a, c) { return a + c.toUpperCase(); });
+  }
+  var ICON = {
+    pen: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l4-1 11-11-3-3L5 16l-1 4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M14 6l3 3" stroke="currentColor" stroke-width="2"/></svg>',
+    bulb: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    loop: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 0 1 13.7-5.7L20 8M20 3v5h-5M20 12a8 8 0 0 1-13.7 5.7L4 16M4 21v-5h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+  };
+  function startScreen(resumed) {
+    stage = "screen"; progress();
+    var name = studentFirstName(), d = st.step;
+    app.innerHTML = "";
+    var c = h("section", { class: "hero" });
+    c.innerHTML = '<div class="halo">' + LOGO_BIG + '</div>' +
+      '<p class="eyebrow">NeuroTutor · Alemán A1</p>' +
+      '<h1>' + (name ? "Hola, " + esc(name) + "." : "Hola.") + '</h1>' +
+      (resumed && d ? '<p class="lead">Llevas ' + d + ' actividades. Retomas exactamente donde lo dejaste.</p>'
+                    : '<p class="lead">Vas a recuperar y consolidar lo que ya habéis trabajado en clase.</p>') +
+      '<div class="chips"><span>120 actividades</span><span>Lektionen 1–3</span><span>Puedes parar y seguir otro día</span></div>' +
+      '<ol class="steps">' +
+      '<li><span class="ic">' + ICON.pen + '</span><b>Primero, tú</b><span>Escribe tu respuesta antes de ver ninguna ayuda.</span></li>' +
+      '<li><span class="ic">' + ICON.bulb + '</span><b>Si fallas, una pista</b><span>Vuelve a intentarlo: las pistas orientan, no dan la respuesta.</span></li>' +
+      '<li><span class="ic">' + ICON.loop + '</span><b>Lo difícil vuelve</b><span>Lo que hoy te cueste reaparecerá más adelante con otro ejemplo.</span></li></ol>' +
+      '<button class="primary big" id="go">' + (resumed && d ? "Continuar" : "Empezar") + '</button>' +
+      '<p class="kbd">Puedes usar <kbd>Enter</kbd> para comprobar y para continuar.</p>';
+    app.appendChild(c);
+    document.getElementById("go").addEventListener("click", function () { next(); });
+    primaryAction = function () { next(); };
+  }
+
+  /* ---------------- Secuencia: base intercalada + recuperaciones adaptativas ---------------- */
+  function windowBlocked(id) {
+    var g = BY[id].g || [];
+    return PAIRS.some(function (p) { return st.i > p.e && st.i <= p.r && g.some(function (x) { return p.g.indexOf(x) > -1; }); });
+  }
+  function pickAdaptive() {
+    var list = st.q.slice().sort(function (a, b) { return a[1] - b[1]; });
+    for (var k = 0; k < list.length; k++) {
+      if ((list[k][1] <= st.step || st.i >= N) && (st.i >= N || !windowBlocked(list[k][0]))) return list[k][0];
+    }
+    return null;
+  }
+  function currentId() {
+    if (st.cur) return st.cur.id;
+    var a = pickAdaptive(); if (a) return a;
+    return st.i < N ? ORDER[st.i] : null;
+  }
+  function next() {
+    var id = currentId();
+    if (!id) return endScreen();
+    var d = st.step;
+    if (d && d % 20 === 0 && st.ck < d && !st.cur) { st.ck = d; save(); return pauseScreen(d); }
+    renderItem(id);
+  }
+  function hardStructures() {
+    // agrupado por contenido; lo recuperado después sin ayuda deja de figurar en «Repasa también»
+    var rec = {}, best = {}, order = [];
+    Object.keys(st.ad).forEach(function (id) { if ("15".indexOf(st.ad[id]) > -1) rec[BY[id].c] = 1; });
+    function add(it, code) {
+      if ("234".indexOf(code) < 0) return;
+      var lvl = "34".indexOf(code) > -1 ? 2 : 1, o = best[it.c];
+      if (!o) { best[it.c] = { c: it.c, e: it.e, lvl: lvl }; order.push(it.c); }
+      else if (lvl > o.lvl) { o.lvl = lvl; o.e = it.e; }
+    }
+    for (var p = 0; p < N; p++) { var ch = st.r.charAt(p); if (ch !== "0") add(BY[ORDER[p]], ch); }
+    Object.keys(st.ad).forEach(function (id) { add(BY[id], st.ad[id]); });
+    var first = [], also = [];
+    order.forEach(function (c) { var o = best[c]; o.rec = !!rec[c]; if (o.lvl === 2) first.push(o); else if (!o.rec) also.push(o); });
+    first.sort(function (a, b) { return a.rec - b.rec; });
+    return { first: first, also: also };
+  }
+  function pauseScreen(d) {
+    stage = "screen"; progress();
+    var hs = hardStructures(), hard = hs.first.concat(hs.also).map(function (o) { return o.c; });
+    app.innerHTML = "";
+    var c = h("section", { class: "hero pause" });
+    c.innerHTML = '<div class="halo small">' + LOGO_BIG + '</div><h1>Pausa breve</h1><p class="lead">Has completado ' + d + ' actividades.</p>' +
+      (hard.length ? '<p>Estas estructuras te han exigido más esfuerzo. Volverán a aparecer, con otros ejemplos:</p><ul class="hard">' +
+        hard.slice(-6).map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + '</ul>' +
+        '<p class="tip">Antes de seguir, intenta formular mentalmente la regla de una de ellas, sin mirar apuntes.</p>'
+        : '<p>Hasta ahora has resuelto todo al primer intento. Sigue respondiendo antes de dudar: recuperar es lo que consolida.</p>') +
+      '<button class="primary big" id="go">Seguir</button>';
+    app.appendChild(c);
+    var go = function () { renderItem(currentId()); };
+    document.getElementById("go").addEventListener("click", go);
+    primaryAction = go;
+  }
+  function endScreen() {
+    stage = "screen"; progress();
+    var r = st.r, c1 = (r.match(/[15]/g) || []).length, c2 = (r.match(/2/g) || []).length, c3 = (r.match(/[34]/g) || []).length;
+    var adIds = Object.keys(st.ad), adOk = adIds.filter(function (id) { return "15".indexOf(st.ad[id]) > -1; }).length;
+    if (API) {
+      LMS.set("cmi.core.lesson_status", "completed");
+      LMS.set("cmi.core.score.min", "0"); LMS.set("cmi.core.score.max", "100");
+      LMS.set("cmi.core.score.raw", String(Math.round(100 * c1 / N)));
+      LMS.set("cmi.core.exit", "");
+    }
+    save();
+    var hs = hardStructures(), ow = [], seenW = {};
+    st.ow.forEach(function (o) { var k = E.norm(o[1]); if (!seenW[k]) { seenW[k] = 1; ow.push(o); } });
+    function block(title, list, cls) {
+      if (!list.length) return "";
+      var more = list.length > 8 ? '<p class="more">y ' + (list.length - 8) + ' más</p>' : "";
+      return '<div class="rev ' + cls + '"><h2>' + title + '</h2><ul>' + list.slice(0, 8).map(function (o) {
+        return '<li><b>' + esc(o.c) + '</b>' + (o.rec ? ' <span class="badge">luego la recuperaste sin ayuda</span>' : '') + '<span>' + esc(o.e) + '</span></li>';
+      }).join("") + '</ul>' + more + '</div>';
+    }
+    app.innerHTML = "";
+    var c = h("section", { class: "hero end" });
+    c.innerHTML = '<div class="halo small">' + LOGO_BIG + '</div><h1>Has terminado.</h1>' +
+      '<div class="stats"><div><strong>' + c1 + '</strong><span>de ' + N + ' al primer intento</span></div><div><strong>' + c2 + '</strong><span>con pistas, por ti mismo/a</span></div><div><strong>' + c3 + '</strong><span>con la solución</span></div></div>' +
+      (adIds.length ? '<p class="lead">De las ' + adIds.length + ' estructuras que volvieron a aparecer tras un error, recuperaste ' + adOk + ' sin ninguna ayuda.</p>' : '') +
+      '<div class="review">' + block("Repasa primero", hs.first, "first") + block("Repasa también", hs.also, "also") +
+      (ow.length ? '<div class="rev ortho"><h2>Cuida la ortografía</h2><p class="words">' + ow.slice(0, 14).map(function (o) { return '<span lang="de"><s>' + esc(o[0]) + '</s> → <b>' + esc(o[1]) + '</b></span>'; }).join("") + '</p></div>' : '') +
+      (!hs.first.length && !hs.also.length && !ow.length ? '<p>No hay nada pendiente: lo has resuelto todo a la primera.</p>' : '') + '</div>' +
+      '<p class="kbd">Ya puedes cerrar esta ventana.</p>';
+    app.appendChild(c);
+    primaryAction = null;
+  }
+
+  /* ---------------- Actividad ---------------- */
+  function renderItem(id) {
+    var it = BY[id]; curItem = it;
+    if (!st.cur || st.cur.id !== id) st.cur = { id: id, a: 0, h: 0, f: null, fc: null, cond: null, o: 0, t: Math.floor(Date.now() / 1000), dg: null };
+    save(); progress();
+    app.innerHTML = "";
+    var card = h("section", { class: "card item", "aria-live": "polite" });
+    card.appendChild(h("p", { class: "consigna" }, esc(it.q)));
+    if (it.v) card.appendChild(h("div", { class: "visual" }, VIS[it.v.type](it.v)));
+    var answerZone;
+    if (it.m === "b") {
+      var html = esc(it.p).replace(/\{(\d+)\}/g, function (_, n) {
+        return '<input class="blank" data-b="' + n + '" aria-label="Hueco ' + (+n + 1) + '" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="done">';
+      });
+      answerZone = h("div", { class: "stim", lang: "de" }, html);
+      card.appendChild(answerZone);
+      [].forEach.call(answerZone.querySelectorAll(".blank"), function (inp) {
+        inp.addEventListener("input", function () { inp.style.width = Math.max(7, inp.value.length + 2) + "ch"; inp.classList.remove("ok", "bad"); });
+      });
+    } else if (it.m === "s") {
+      if (it.p) card.appendChild(h("div", { class: "stim src", lang: "de" }, esc(it.p)));
+      answerZone = h("div", { class: "line" }, '<input class="answer" lang="de" aria-label="Tu respuesta" placeholder="Tu respuesta en alemán" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="done">');
+      card.appendChild(answerZone);
+    } else {
+      var tiles = shuffled(it.tiles, it.id, it.a);
+      answerZone = h("div", { class: "tiles" });
+      answerZone.innerHTML = '<div class="build" lang="de" aria-label="Tu oración"></div><div class="pool" lang="de"></div>';
+      card.appendChild(answerZone);
+      var pool = answerZone.querySelector(".pool"), build = answerZone.querySelector(".build");
+      tiles.forEach(function (w) {
+        var b = h("button", { class: "tile", type: "button" }, esc(w));
+        b.addEventListener("click", function () {
+          if (stage !== "answering") return;
+          (b.parentNode === pool ? build : pool).appendChild(b);
+          build.classList.toggle("has", build.children.length > 0);
+        });
+        pool.appendChild(b);
+      });
+    }
+    card.appendChild(h("div", { class: "feedback", id: "fb" }));
+    var actions = h("div", { class: "actions" });
+    var btn = h("button", { class: "primary", id: "check", type: "button" }, "Comprobar");
+    actions.appendChild(btn); card.appendChild(actions);
+    card.appendChild(h("p", { class: "kbd" }, "<kbd>Enter</kbd> para comprobar"));
+    app.appendChild(card);
+    btn.addEventListener("click", function () { if (stage === "answering") check(); else if (stage === "done") next(); });
+    primaryAction = function () { if (stage === "answering") check(); else if (stage === "done") next(); };
+    stage = "answering"; tShown = Date.now();
+    if (st.cur.h > 0 && st.cur.a > 0) showHint(it, st.cur.h, true);
+    focusFirst();
+  }
+  function focusFirst() {
+    var f = app.querySelector(".blank, .answer, .tile");
+    if (f && window.matchMedia("(pointer: fine)").matches) f.focus();
+  }
+  function collect(it) {
+    if (it.m === "b") return [].map.call(app.querySelectorAll(".blank"), function (x) { return x.value; });
+    if (it.m === "s") return app.querySelector(".answer").value;
+    return [].map.call(app.querySelectorAll(".build .tile"), function (x) { return x.textContent; }).join(" ");
+  }
+  function respText(it, resp) { return it.m === "b" ? resp.join(" / ") : resp; }
+
+  function check() {
+    var it = curItem, resp = collect(it), g = E.grade(it, resp);
+    if (g.empty) { flash("Escribe primero tu respuesta: el intento es parte del aprendizaje."); return; }
+    var cur = st.cur, latency = Date.now() - tShown;
+    // Hora correcta en el registro equivocado: se avisa y no cuenta como intento
+    if (!g.ok && g.reg) {
+      var cond0 = cur.cond || (it.er === "E" ? "PEND" : it.er === "R" ? "R" + (st.pc[it.pair] || "NA") : it.er === "A" ? "ADA" : "STD");
+      logInteraction(iid(it, cond0, "reg" + (cur.a + 1)), "fill-in", respText(it, resp), "neutral", latency, E.solutionText(it));
+      flash(it.clk === "inf" ? "Esa hora es correcta, pero en lenguaje oficial. Aquí se pide cómo se dice en una conversación. Vuelve a intentarlo."
+                             : "Esa hora es correcta, pero en lenguaje coloquial. Aquí se pide la hora oficial (formato de 24 horas). Vuelve a intentarlo.", "reg");
+      tShown = Date.now(); return;
+    }
+    cur.a++;
+    var first = cur.a === 1;
+    if (first) { cur.f = clean(respText(it, resp), 60).replace(/\|/g, "/"); cur.fc = g.ok ? 1 : 0; cur.lat = latency; }
+    if (first && it.er === "E") {
+      if (g.ok) cur.cond = "NA";
+      else {
+        var fd = st.c[0], fg = st.c[1];
+        cur.cond = fd < fg ? "FD" : fg < fd ? "FGG" : (Math.random() < 0.5 ? "FD" : "FGG");
+        st.c[cur.cond === "FD" ? 0 : 1]++;
+      }
+      st.pc[it.pair] = cur.cond;
+    }
+    if (!cur.cond) cur.cond = it.er === "R" ? "R" + (st.pc[it.pair] || "NA") : it.er === "A" ? "ADA" : "STD";
+    logInteraction(iid(it, cur.cond, "a" + cur.a + "h" + cur.h), it.m === "t" ? "sequencing" : "fill-in", respText(it, resp), g.ok ? "correct" : "wrong", latency, E.solutionText(it));
+    if (it.m === "b" && g.per) markBlanks(g.per);
+    if (g.diag) cur.dg = g.diag;
+    if (g.ok) { if (g.ortho && g.ortho.length) cur.o = 1; return finish(it, cur.a === 1 ? (cur.o ? "5" : "1") : "2", g); }
+    if (cur.cond === "FD") return finish(it, "4", g);
+    if (cur.a >= 3) return finish(it, "3", g);
+    cur.h = cur.a; save();
+    showHint(it, cur.h, false, g.diag);
+    tShown = Date.now();
+  }
+  function markBlanks(per) {
+    [].forEach.call(app.querySelectorAll(".blank"), function (x, i) { x.classList.remove("ok", "bad"); x.classList.add(per[i] ? "ok" : "bad"); });
+  }
+  function flash(msg, cls) { document.getElementById("fb").innerHTML = '<div class="note ' + (cls || "") + '">' + esc(msg) + '</div>'; }
+  function showHint(it, level, restoring, diag) {
+    var fb = document.getElementById("fb");
+    var multi = it.m === "b" && it.a.length > 1 && !restoring ? '<p class="sub">Los huecos marcados en verde ya están bien.</p>' : "";
+    var text = level === 1 ? it.h1 : it.h2;
+    var body = diag ? '<p class="diag">' + esc(diag.msg) + '</p>' + (level > 1 ? '<p>' + esc(text) + '</p>' : '') : '<p>' + esc(text) + '</p>';
+    fb.innerHTML = '<div class="hint lvl' + level + '"><div class="bulbs" aria-hidden="true"><i class="on"></i><i class="' + (level > 1 ? "on" : "") + '"></i></div>' +
+      '<div><p class="tag">Pista ' + level + ' de 2</p>' + body + multi + '</div></div>';
+    var inp = app.querySelector(".blank.bad, .answer");
+    if (inp && window.matchMedia("(pointer: fine)").matches) {
+      inp.focus();
+      if (inp.classList.contains("blank")) inp.select(); else { var L = inp.value.length; inp.setSelectionRange(L, L); }
+    }
+  }
+  function orthoHtml(list) {
+    return list.map(function (o) { return '<span lang="de"><s>' + esc(o.from) + '</s> → <b>' + esc(o.to) + '</b></span>'; }).join(", ");
+  }
+  function finish(it, code, g) {
+    var cur = st.cur, fb = document.getElementById("fb"), sol = E.solutionText(it);
+    var final = code === "1" || code === "2" || code === "5" ? 1 : 0, html;
+    var cameBack = (it.er === "A" || (it.er === "R" && (st.pc[it.pair] === "FD" || st.pc[it.pair] === "FGG"))) && cur.a === 1 && final;
+    var bonus = cameBack ? '<p class="back">Esta estructura te costó antes; ahora la has resuelto sin ayuda.</p>' : "";
+    if (g.ortho && g.ortho.length) g.ortho.forEach(function (o) { if (st.ow.length < 20) st.ow.push([clean(o.from, 20), clean(o.to, 20)]); });
+    if (code === "1" || code === "5") {
+      if (g.ortho && g.ortho.length) {
+        var what = it.ord ? "El orden de la oración es correcto." : it.clk ? "La hora es correcta." : it.m === "b" ? "Correcto." : "La estructura es correcta.";
+        html = '<div class="good"><p class="tag">' + what + '</p><p>Revisa únicamente la ortografía: ' + orthoHtml(g.ortho) + '.</p>' + bonus + '</div>';
+      } else html = '<div class="good"><p class="tag">Correcto.</p><p lang="de" class="de">' + esc(g.canon || sol) + '</p>' + bonus + '</div>';
+    } else if (code === "2") {
+      html = '<div class="good"><p class="tag">Correcto: lo has encontrado tú.</p><p lang="de" class="de">' + esc(g.canon || sol) + '</p>' +
+        (g.ortho && g.ortho.length ? '<p>Ortografía: ' + orthoHtml(g.ortho) + '.</p>' : "") + '</div>';
+    } else {
+      var ex = cur.dg && cur.dg.ex ? cur.dg.ex : it.e;
+      html = '<div class="solution"><p class="tag">La respuesta correcta es:</p><p lang="de" class="de">' + esc(sol) + '</p><p>' + esc(ex) + '</p></div>';
+    }
+    fb.innerHTML = html;
+    [].forEach.call(app.querySelectorAll("input"), function (x) { x.readOnly = true; });
+    var btn = document.getElementById("check"); btn.textContent = "Continuar"; btn.classList.add("next");
+    app.querySelector(".kbd").innerHTML = "<kbd>Enter</kbd> para continuar";
+    stage = "done";
+    var now = Math.floor(Date.now() / 1000), dist = "", dsec = "", orig = "";
+    if (it.er === "E") st.et[it.pair] = now;
+    if (it.er === "R") {
+      var ePos = null; ORDER.forEach(function (id, p) { if (BY[id].pair === it.pair && BY[id].er === "E") ePos = p; });
+      dist = st.i - ePos; dsec = st.et[it.pair] ? now - st.et[it.pair] : "";
+    }
+    if (it.er === "A") {
+      var qe = st.q.filter(function (x) { return x[0] === it.id; })[0];
+      if (qe) { dist = st.step - qe[2]; dsec = now - qe[3]; }
+      orig = it.base;
+    }
+    var summary = ["first=" + cur.f, "fc=" + cur.fc, "att=" + cur.a, "hint=" + cur.h, "self=" + (final && cur.a > 1 ? 1 : 0),
+      "final=" + final, "tsc=" + (cur.fc ? 1 : 0), "ortho=" + cur.o, "lr=" + (it.er === "R" || it.er === "A" ? cur.fc : ""),
+      "dist=" + dist, "dsec=" + dsec, "rt=" + Math.round((cur.lat || 0) / 100) / 10, "ts=" + new Date().toISOString()].join("|");
+    logInteraction(iid(it, cur.cond, "SUM"), "performance", summary, final ? "correct" : "wrong", cur.lat || 0, "");
+    if (it.er === "A") {
+      st.ad[it.id] = code;
+      st.q = st.q.filter(function (x) { return x[0] !== it.id; });
+    } else {
+      st.r = st.r.substr(0, st.i) + code + st.r.substr(st.i + 1);
+      st.i++;
+      // recuperación adaptativa: error real en la primera respuesta de un ítem fuera de los pares E→R
+      if (!it.er && cur.fc === 0 && VARIANT_OF[it.id] && !st.ad[VARIANT_OF[it.id]]) {
+        st.q.push([VARIANT_OF[it.id], st.step + 1 + 8 + Math.floor(Math.random() * 8), st.step + 1, now]);
+      }
+    }
+    st.step++; st.cur = null;
+    if (final) { var lg = document.querySelector(".top .logo"); if (lg) { lg.classList.remove("cheer"); void lg.getBoundingClientRect(); lg.classList.add("cheer"); } }
+    if (API) {
+      LMS.set("cmi.core.lesson_status", "incomplete");
+      LMS.set("cmi.core.score.min", "0"); LMS.set("cmi.core.score.max", "100");
+      LMS.set("cmi.core.score.raw", String(Math.round(100 * (st.r.match(/[15]/g) || []).length / N)));
+    }
+    save(); progress();
+    btn.focus({ preventScroll: true });
+  }
+
+  /* ---------------- Teclado: una pulsación = una acción ---------------- */
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "Enter") return;
+    e.preventDefault(); e.stopPropagation();
+    if (e.repeat || e.isComposing) return;
+    var now = Date.now(); if (now - lock < 350) return; lock = now;
+    if (primaryAction) primaryAction();
+  }, true);
+
+  /* ---------------- Sesión ---------------- */
+  var sessionStart = Date.now(), closed = false;
+  function closeSession() {
+    if (!API) return;
+    var s = Math.floor((Date.now() - sessionStart) / 1000);
+    LMS.set("cmi.core.session_time", pad2(Math.floor(s / 3600)) + ":" + pad2(Math.floor((s % 3600) / 60)) + ":" + pad2(s % 60));
+    LMS.set("cmi.core.exit", currentId() ? "suspend" : "");
+    save(); LMS.finish();
+  }
+  function onLeave() { if (!closed) { closed = true; closeSession(); } }
+  window.addEventListener("pagehide", onLeave);
+  window.addEventListener("beforeunload", onLeave);
+
+  LMS.init();
+  st = load();
+  var resumed = !!st;
+  if (!st) st = fresh();
+  if (API) {
+    var status = LMS.get("cmi.core.lesson_status");
+    if (status === "not attempted" || !status) LMS.set("cmi.core.lesson_status", "incomplete");
+    var cnt = parseInt(LMS.get("cmi.interactions._count"), 10); if (!isNaN(cnt) && cnt > st.ix) st.ix = cnt;
+    LMS.commit();
+  }
+  if (!currentId()) endScreen(); else startScreen(resumed);
+  window.__NT = { state: function () { return st; }, current: currentId };
+})();
+
+</script>
+</body>
+</html>
